@@ -20,6 +20,6 @@ public class Cluedo {
 		if(this.uiVendor == null)
 			this.uiVendor = new TextCluedoUI();
 		
-		this.uiVendor.DisplayMessage(CluedoMessage.WelcomeMessage, null);
+		this.uiVendor.DisplayMessage(CluedoMessage.WelcomeMessage);
 	}
 }
