@@ -163,7 +163,7 @@ public class TextCluedoUI implements CluedoUI {
 
 		System.out.printf("Which room was the murder committed in?\n");
 		
-		Room[] roomList = (Room[]) Room.rooms.values().toArray();
+		Room[] roomList = (Room[]) Room.rooms.values().toArray(new Room[Room.rooms.size()]);
 		
 		while(choice < 0)
 		{
