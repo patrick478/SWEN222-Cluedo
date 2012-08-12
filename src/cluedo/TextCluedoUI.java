@@ -118,7 +118,7 @@ public class TextCluedoUI implements CluedoUI {
 		 		newGuess.wep = Weapon.weapons[choice];
 		 	else
 		 	{
-		 		System.out.printf("You need to enter a valid selection");
+		 		System.out.printf("You need to enter a valid selection\n");
 		 		choice = -1;
 		 	}
 
