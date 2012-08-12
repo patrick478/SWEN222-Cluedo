@@ -15,7 +15,7 @@ public class Weapon extends GameObject{
 		new Weapon("Trophy"),
 		new Weapon("Poison"),
 		new Weapon("Axe")
-
+		
 		
 		
 	};
