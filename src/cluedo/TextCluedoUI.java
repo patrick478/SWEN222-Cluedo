@@ -12,7 +12,16 @@ public class TextCluedoUI implements CluedoUI {
 		switch(msg)
 		{
 			case WelcomeMessage:
-				System.out.println("Welcome to Cluedo");
+				System.out.println("================================================");
+				System.out.println("================================================");
+
+				System.out.println("             Welcome to CLUEDO");
+				System.out.println("                Version 1.0");
+				System.out.println("  Written by Ben Anderson and Patrick Barnes");
+				System.out.println("================================================");
+				System.out.println("================================================");
+				System.out.printf("\n\n\n");
+				
 				break;
 			case FoundCard:
 				System.out.printf("Found the %s card!\n", ((GameObject)args[0]).GetName());
@@ -21,11 +30,17 @@ public class TextCluedoUI implements CluedoUI {
 				System.out.printf("Looks like no one has that card. Hmm..\n");
 				break;
 			case Winner:
+				System.out.println("================================================");
 				System.out.printf("The winner is [Player %d]: %s\n", args[0], ((GameObject)args[1]).GetName());
+				System.out.println("================================================");
+
 				break;
 				
 			case Loser:
+				System.out.println("================================================");
 				System.out.printf("The loser is [Player %d]: %s\n", args[0], ((GameObject)args[1]).GetName());
+				System.out.println("================================================");
+
 				break;	
 		}
 	}
@@ -36,7 +51,7 @@ public class TextCluedoUI implements CluedoUI {
 		
 		while(choice < 0)
 		{
-			System.out.printf("[Player %d] Select a character:\n", playerIndex);
+			System.out.printf("[Player %d] Select a character:\n\n", playerIndex);
 			for(int i = 0; i < Character.characters.length; i++)
 			{
 				if(!Character.characters[i].isChosen)
@@ -69,6 +84,8 @@ public class TextCluedoUI implements CluedoUI {
 	
 	public void SetTurn(int playerIndex, Player p, Board b)
 	{
+		System.out.printf("\n\n\n\n");
+		System.out.println("==================================================================");
 		System.out.printf("It's now [Player %d] %s's turn! You're in the %s\n", playerIndex, p.GetCharacter().GetName(), p.FindOnBoard(b).GetName());
 	}
 	
@@ -80,7 +97,7 @@ public class TextCluedoUI implements CluedoUI {
 	
 	public void SetRoll(int d1, int d2)
 	{
-		System.out.printf("Rolling, rolling, rolling and you rolled %d and %d giving you a %d\n", d1, d2, d1+d2);
+		System.out.printf("\nRolling, rolling, rolling and you rolled %d and %d giving you a %d\n", d1, d2, d1+d2);
 	}
 	
 	public void WaitAction(String msg)
@@ -100,7 +117,7 @@ public class TextCluedoUI implements CluedoUI {
 		
 		int choice = -1;
 		
-		System.out.printf("What do you think the murder weapon was?\n");
+		System.out.printf("\n\nWhat would you like to guess the weapon was?\n");
 		
 		while(choice < 0)
 		{
@@ -111,7 +128,7 @@ public class TextCluedoUI implements CluedoUI {
 					seenCard = "X";
 				System.out.printf("%d) [%s] %s\n", i+1, seenCard, Weapon.weapons[i].GetName());
 			}
-		 	System.out.printf("Which weapon do you think it was? ");
+		 	System.out.printf("Choose weapon: ");
 
 		 	choice = input.nextInt() - 1;
 		 	if(choice >= 0 && choice < Weapon.weapons.length)
@@ -126,7 +143,7 @@ public class TextCluedoUI implements CluedoUI {
 
 		choice = -1;
 
-		System.out.printf("Who do you think the murder is?\n");
+		System.out.printf("\n\nWho would you like to guess the kidnapper is?\n");
 		
 		while(choice < 0)
 		{
@@ -137,14 +154,14 @@ public class TextCluedoUI implements CluedoUI {
 					seenCard = "X";
 				System.out.printf("%d) [%s] %s\n", i+1, seenCard, Character.characters[i].GetName());
 			}
-		 	System.out.printf("Which character do you think it was? ");
+		 	System.out.printf("Choose character: ");
 
 		 	choice = input.nextInt() - 1;
 		 	if(choice >= 0 && choice < Character.characters.length)
 		 		newGuess.murderer = Character.characters[choice];
 		 	else
 		 	{
-		 		System.out.printf("You need to enter a valid selection");
+		 		System.out.printf("\nYou need to enter a valid selection\n");
 		 		choice = -1;
 		 	}
 		}
@@ -156,12 +173,12 @@ public class TextCluedoUI implements CluedoUI {
 	
 	public Guess GetAccusation(Player p)
 	{
-		System.out.printf("This is an accusation!! Who killed the host?\n");
+		System.out.printf("\n\nThis is an accusation!! Who do you think kidnapped the Millionaire Mogul?\n");
 		Guess gn = this.GetGuess(p);
 		
 		int choice = -1;
 
-		System.out.printf("Which room was the murder committed in?\n");
+		System.out.printf("\nWhich room was the kidnapping committed in?\n");
 		
 		Room[] roomList = (Room[]) Room.rooms.values().toArray(new Room[Room.rooms.size()]);
 		
@@ -174,14 +191,14 @@ public class TextCluedoUI implements CluedoUI {
 					seenCard = "X";
 				System.out.printf("%d) [%s] %s\n", i+1, seenCard, roomList[i].GetName());
 			}
-		 	System.out.printf("Which room do you think it was? ");
+		 	System.out.printf("\nWhich room do you think it was? ");
 
 		 	choice = input.nextInt() - 1;
 		 	if(choice >= 0 && choice < roomList.length)
 		 		gn.room = roomList[choice];
 		 	else
 		 	{
-		 		System.out.printf("You need to enter a valid selection");
+		 		System.out.printf("You need to enter a valid selection\n");
 		 		choice = -1;
 		 	}
 		}
