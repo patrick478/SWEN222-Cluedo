@@ -1,0 +1,22 @@
+#![Player taking turn]
+ext:External[pe]
+game:Game
+user:Actor
+player:Player
+board:Board[]
+cards:Card
+/guess:Guess[]
+
+
+ext:game.startGame()
+game:return guess=player.takeTurn()
+player:return path=board.FindMovement(currentPosition)
+user:player.chooseRoomToTravelTo()
+player:board.updatePosition(xPos, yPos)
+[c:alt if in a room]
+player:return=guess.new()
+
+--[else]
+player:
+[/c]
+game:return cardInGuess=cards.checkGuess()
