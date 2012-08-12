@@ -11,8 +11,7 @@ public class Assign1 {
 		int numPlayers = 0;
 		
 		Scanner scanner = new Scanner(System.in);
-		while(!scanner.hasNextInt())
-			System.out.printf("Plese enter the number of players: ");
+		System.out.printf("Please enter the number of players: ");
 		
 		numPlayers = scanner.nextInt();
 		scanner.close();

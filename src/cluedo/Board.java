@@ -1,7 +1,7 @@
 package cluedo;
 
 public class Board {
-	public BoardTile[][] boardSpaces = new BoardTile[30][30];
+	public BoardTile[][] boardSpaces = new BoardTile[24][29];
 	
 	public void Setup()
 	{
@@ -10,8 +10,13 @@ public class Board {
 		Room.rooms.put("Spa", new Room("Spa"));
 		
 		this.SetRegion(0, 0, 5, 5, Room.rooms.get("Spa"));
-		this.SetRegion(0, 6, 4, 6, Room.rooms.get("Spa"));
-		this.SetDoor(5, 4, new Door(Room.rooms.get("Spa")));
+		this.SetRegion(0, 6, 4, 7, Room.rooms.get("Spa"));
+		this.SetDoor(5, 6, new Door(Room.rooms.get("Spa")));
+		
+		this.SetRegion(0, 21, 5, 21 , Room.rooms.get("Kitchen"));
+		this.SetRegion(0, 22, 6, 28, Room.rooms.get("Kitchen"));
+		this.SetDoor(6, 21, new Door(Room.rooms.get("Kitchen")));
+
 	}
 	
 	private void SetDoor(int x, int y, Door d)
@@ -30,8 +35,8 @@ public class Board {
 	
 	public void PrintBoard()
 	{
-		for(int i = 0; i < 30; i++) {
-			for(int j = 0; j < 30; j++) {
+		for(int i = 0; i < 29; i++) {
+			for(int j = 0; j < 24; j++) {
 				if(this.boardSpaces[j][i] != null)
 					System.out.printf("%c", this.boardSpaces[j][i].ShortName());
 				else

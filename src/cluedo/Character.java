@@ -5,6 +5,8 @@ public class Character extends GameObject {
 		this.SetName(n);
 	}
 	
+	
+	
 	public static final Character[] characters = new Character[] {
 		new Character("Kasandra Scarlet"), 
 		new Character("Jack Mustard"),
