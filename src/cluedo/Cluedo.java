@@ -32,7 +32,7 @@ public class Cluedo {
 		for(int i = 0; i < this.nPlayers; i++) 
 		{			
 			Player newPlayer = new Player();
-			newPlayer.SetCharacter(Character.selectCharacter());
+			newPlayer.SetCharacter(Character.SelectCharacter());
 			players.add(newPlayer);
 		}
 	}
