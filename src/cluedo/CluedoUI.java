@@ -2,7 +2,11 @@ package cluedo;
 
 enum CluedoMessage
 {
-	WelcomeMessage
+	WelcomeMessage,
+	FoundCard,
+	NoCards,
+	Winner,
+	Loser
 };
 
 public interface CluedoUI {
@@ -13,6 +17,7 @@ public interface CluedoUI {
 	public void SetRoll(int d1, int d2);
 	public void WaitAction(String msg);
 	public Guess GetGuess(Player p);
+	public Guess GetAccusation(Player p);
 	public Movement PresentMovements(Player p, Movement[] m, int diceTotal);
 }
 

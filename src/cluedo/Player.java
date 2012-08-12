@@ -1,6 +1,5 @@
 package cluedo;
 
-import java.io.IOException;
 import java.util.*;
 
 public class Player {
@@ -11,7 +10,7 @@ public class Player {
 	private int X;
 	private int Y;
 	
-	private List<GameObject> cards = new ArrayList<GameObject>();
+	List<GameObject> cards = new ArrayList<GameObject>();
 	
 	public Character GetCharacter() {
 		return this.playerChar;
@@ -36,7 +35,7 @@ public class Player {
 		this.playerChar = selectCharacter;
 	}
 	
-	public void TakeTurn(CluedoUI ui, Board b)
+	public Guess TakeTurn(CluedoUI ui, Board b)
 	{
 		ui.SetPosition(this.FindOnBoard(b));
 		int diceOne = Player.random.nextInt(6)+1;
@@ -63,12 +62,35 @@ public class Player {
 		}
 		
 		
-		if(this.FindOnBoard(b) instanceof Room)
-		{
-			Guess newGuess = ui.GetGuess(this);
-			newGuess.room = (Room)this.FindOnBoard(b);
-			newGuess.Print();
+		Room tRoom = null;
+		BoardTile tile = this.FindOnBoard(b);
+		if(tile instanceof Room)
+		{		
+			tRoom = (Room)tile;
 		}
+		else if(tile instanceof Door)
+		{
+			tRoom = ((Door)tile).linkedRoom;
+		}
+		
+		
+		Guess newGuess = null;
+		if(tRoom != null)
+		{
+			if(tRoom == Room.rooms.get("Pool"))
+			{
+				newGuess = ui.GetAccusation(this);
+				newGuess.isAccusation = true;
+			}
+			else
+			{
+				newGuess = ui.GetGuess(this);
+				newGuess.room = tRoom;
+				newGuess.Print();
+			}
+		}
+		
+		return newGuess;
 	}
 	
 	public Movement[] PlotMovements(Board board)

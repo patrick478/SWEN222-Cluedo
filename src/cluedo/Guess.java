@@ -5,6 +5,8 @@ public class Guess {
 	public Character murderer;
 	public Weapon wep;
 	
+	boolean isAccusation = false;
+	
 	public Guess(Room r, Character c, Weapon w)
 	{
 		this.room = r;
@@ -30,11 +32,5 @@ public class Guess {
 			System.out.printf("%s in the %s with the %s\n", this.murderer.GetName(), this.room.GetName(), this.wep.GetName());
 		else
 			System.out.printf("[BUG!] (This shouldn't be possible) Invalid guess - uh oh!!");
-	}
-	
-	public static Guess GenerateRandomGuess()
-	{
-		return null;
-		//return new Guess();
 	}
 }

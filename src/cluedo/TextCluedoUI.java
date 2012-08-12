@@ -14,6 +14,19 @@ public class TextCluedoUI implements CluedoUI {
 			case WelcomeMessage:
 				System.out.println("Welcome to Cluedo");
 				break;
+			case FoundCard:
+				System.out.printf("Found the %s card!\n", ((GameObject)args[0]).GetName());
+				break;
+			case NoCards:
+				System.out.printf("Looks like no one has that card. Hmm..\n");
+				break;
+			case Winner:
+				System.out.printf("The winner is [Player %d]: %s\n", args[0], ((GameObject)args[1]).GetName());
+				break;
+				
+			case Loser:
+				System.out.printf("The loser is [Player %d]: %s\n", args[0], ((GameObject)args[1]).GetName());
+				break;	
 		}
 	}
 	
@@ -93,7 +106,10 @@ public class TextCluedoUI implements CluedoUI {
 		{
 			for(int i = 0; i < Weapon.weapons.length; i++)
 			{
-				System.out.printf("%d) [ ] %s\n", i+1, Weapon.weapons[i].GetName());
+				String seenCard = " ";
+				if(p.cards.contains(Weapon.weapons[i]))
+					seenCard = "X";
+				System.out.printf("%d) [%s] %s\n", i+1, seenCard, Weapon.weapons[i].GetName());
 			}
 		 	System.out.printf("Which weapon do you think it was? ");
 
@@ -116,7 +132,10 @@ public class TextCluedoUI implements CluedoUI {
 		{
 			for(int i = 0; i < Character.characters.length; i++)
 			{
-				System.out.printf("%d) [ ] %s\n", i+1, Character.characters[i].GetName());
+				String seenCard = " ";
+				if(p.cards.contains(Character.characters[i]))
+					seenCard = "X";
+				System.out.printf("%d) [%s] %s\n", i+1, seenCard, Character.characters[i].GetName());
 			}
 		 	System.out.printf("Which character do you think it was? ");
 
@@ -134,6 +153,41 @@ public class TextCluedoUI implements CluedoUI {
 		
 		return newGuess;
 	}
+	
+	public Guess GetAccusation(Player p)
+	{
+		System.out.printf("This is an accusation!! Who killed the host?");
+		Guess gn = this.GetGuess(p);
+		
+		int choice = -1;
+
+		System.out.printf("Which room was the murder committed in?\n");
+		
+		Room[] roomList = (Room[]) Room.rooms.values().toArray();
+		
+		while(choice < 0)
+		{
+			for(int i = 0; i < roomList.length; i++)
+			{
+				String seenCard = " ";
+				if(p.cards.contains(roomList[i]))
+					seenCard = "X";
+				System.out.printf("%d) [%s] %s\n", i+1, seenCard, roomList[i].GetName());
+			}
+		 	System.out.printf("Which room do you think it was? ");
+
+		 	choice = input.nextInt() - 1;
+		 	if(choice >= 0 && choice < roomList.length)
+		 		gn.room = roomList[choice];
+		 	else
+		 	{
+		 		System.out.printf("You need to enter a valid selection");
+		 		choice = -1;
+		 	}
+		}
+		
+		return gn;
+	}
 
 	@Override
 	public Movement PresentMovements(Player p, Movement[] m, int totalDice) {
@@ -143,13 +197,15 @@ public class TextCluedoUI implements CluedoUI {
 		
 		while(true)
 		{
-			for(int i = 0; i < m.length; i++)
+			int i = 0;
+			for(i = 0; i < m.length; i++)
 			{
 				if(m[i].stepsRequired > totalDice)
 					System.out.printf("%d) Move %d steps towards %s which is %d steps away\n", i+1, totalDice, m[i].finalRoom.GetName(), m[i].stepsRequired);
 				else
 					System.out.printf("%d) Move to %s\n", i+1, m[i].finalRoom.GetName());
 			}
+			
 		 	System.out.printf("Which move would you like to make? ");
 
 		 	choice = input.nextInt() - 1;
