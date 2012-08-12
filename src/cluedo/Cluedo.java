@@ -21,5 +21,9 @@ public class Cluedo {
 			this.uiVendor = new TextCluedoUI();
 		
 		this.uiVendor.DisplayMessage(CluedoMessage.WelcomeMessage);
+		
+		Board b = new Board();
+		b.Setup();
+		b.PrintBoard();
 	}
 }
