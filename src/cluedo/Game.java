@@ -8,11 +8,12 @@ public class Game {
 	private int nPlayers = 0;
 	private boolean running = false;
 	
-	private CluedoUI uiVendor;
+	private CluedoUI uiVendor = null;
 	
-	public Game(int numPlayers)
+	public Game(int numPlayers, CluedoUI ui)
 	{
 		this.nPlayers = numPlayers;
+		this.uiVendor = ui;
 	}
 	
 	public void Start() throws CluedoException

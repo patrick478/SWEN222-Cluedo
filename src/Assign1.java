@@ -6,11 +6,11 @@ public class Assign1 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO MAKE THIS PROPERLY USING CluedoUI
-		System.out.println("[DEBUG] TODO Assign1.java:main sets numPlayers = 4");
-		int numPlayers = 2;
+		CluedoUI ui = new TextCluedoUI();
 		
-		Game cluedo = new Game(numPlayers);
+		int numPlayers = ui.GetNumPlayers();
+		
+		Game cluedo = new Game(numPlayers, ui);
 		
 		try 
 		{
