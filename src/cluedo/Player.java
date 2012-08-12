@@ -3,6 +3,9 @@ package cluedo;
 public class Player {
 
 	private Character playerChar;
+	private int X;
+	private int Y;
+	
 	public Character GetCharacter() {
 		return this.playerChar;
 	}
