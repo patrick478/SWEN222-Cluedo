@@ -3,7 +3,7 @@ package cluedo;
 public class TextCluedoUI implements CluedoUI {
 
 	@Override
-	public void DisplayMessage(CluedoMessage msg, Object args) {
+	public void DisplayMessage(CluedoMessage msg, Object... args) {
 		switch(msg)
 		{
 			case WelcomeMessage:

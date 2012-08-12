@@ -2,7 +2,7 @@ package cluedo;
 
 public class Cluedo {
 	
-	private final int MaxPlayers = 8;
+	private final int MaxPlayers = 6;
 	private int nPlayers = 0;
 	
 	private CluedoUI uiVendor;
@@ -20,6 +20,6 @@ public class Cluedo {
 		if(this.uiVendor == null)
 			this.uiVendor = new TextCluedoUI();
 		
-		this.uiVendor.DisplayMessage(CluedoMessage.WelcomeMessage, null);
+		this.uiVendor.DisplayMessage(CluedoMessage.WelcomeMessage);
 	}
 }
