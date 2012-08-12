@@ -9,4 +9,6 @@ public abstract class BoardTile extends GameObject
 		else
 		return ((String)(this.GetName())).charAt(0);
 	}
+	
+	public static BoardTile Empty = new Room("Hallway");
 }

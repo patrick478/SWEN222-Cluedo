@@ -1,5 +1,7 @@
 package cluedo;
 
+import java.util.Random;
+
 public class Weapon extends GameObject{
 	
 	private Room room;
@@ -26,8 +28,11 @@ public class Weapon extends GameObject{
 		new Weapon("Trophy"),
 		new Weapon("Poison"),
 		new Weapon("Axe")
-		
-		
-		
 	};
+	
+	public static Weapon getRandom()
+	{
+		Random r = new Random();
+		return weapons[r.nextInt(weapons.length)];
+	}
 }

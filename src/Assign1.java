@@ -10,7 +10,7 @@ public class Assign1 {
 		System.out.println("[DEBUG] TODO Assign1.java:main sets numPlayers = 4");
 		int numPlayers = 4;
 		
-		Cluedo cluedo = new Cluedo(numPlayers);
+		Game cluedo = new Game(numPlayers);
 		
 		try 
 		{

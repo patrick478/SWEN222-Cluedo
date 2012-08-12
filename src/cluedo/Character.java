@@ -1,5 +1,7 @@
 package cluedo;
 
+import java.util.*;
+
 public class Character extends GameObject {
 	
 	int startPosX = -1;
@@ -13,11 +15,17 @@ public class Character extends GameObject {
 	}  
 
 	public static final Character[] characters = new Character[] {
-		new Character("Kasandra Scarlet", 0, 0), 
-		new Character("Jack Mustard", 0, 0),
-		new Character("Diane White", 0, 0), 
-		new Character("Jacob Green", 0, 0), 
-		new Character("Eleanor Peacock", 6, 0), 
-		new Character("Victor Plum", 0, 0)
+		new Character("Kasandra Scarlet", 18, 28), 
+		new Character("Jack Mustard", 7, 28),
+		new Character("Diane White", 0, 19), 
+		new Character("Jacob Green", 0, 9), 
+		new Character("Eleanor Peacock", 20, 0), 
+		new Character("Victor Plum", 6, 0)
 	};
+	
+	public static Character getRandom()
+	{
+		Random r = new Random();
+		return characters[r.nextInt(characters.length)];
+	}
 }
