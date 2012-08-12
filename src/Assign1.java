@@ -8,7 +8,7 @@ public class Assign1 {
 	public static void main(String[] args) {
 		// TODO MAKE THIS PROPERLY USING CluedoUI
 		System.out.println("[DEBUG] TODO Assign1.java:main sets numPlayers = 4");
-		int numPlayers = 4;
+		int numPlayers = 2;
 		
 		Game cluedo = new Game(numPlayers);
 		
