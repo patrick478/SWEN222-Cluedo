@@ -156,14 +156,14 @@ public class TextCluedoUI implements CluedoUI {
 	
 	public Guess GetAccusation(Player p)
 	{
-		System.out.printf("This is an accusation!! Who killed the host?");
+		System.out.printf("This is an accusation!! Who killed the host?\n");
 		Guess gn = this.GetGuess(p);
 		
 		int choice = -1;
 
 		System.out.printf("Which room was the murder committed in?\n");
 		
-		Room[] roomList = (Room[]) Room.rooms.values().toArray();
+		Room[] roomList = (Room[]) Room.rooms.values().toArray(new Room[Room.rooms.size()]);
 		
 		while(choice < 0)
 		{

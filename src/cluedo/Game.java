@@ -53,8 +53,6 @@ public class Game {
 		available.addAll(Room.rooms.values());
 		
 		// TODO those lists need to be shuffled. before they're added, too.
-		
-		
 		available.remove(murderWeapon);
 		available.remove(murderRoom);
 		available.remove(murderCharacter);
@@ -71,7 +69,54 @@ public class Game {
 			for(int i = 0; i < this.nPlayers; i++)
 			{
 				uiVendor.SetTurn(i+1, players.get(i), b);
-				players.get(i).TakeTurn(uiVendor, b);
+				Guess g = players.get(i).TakeTurn(uiVendor, b);
+				if(g.isAccusation)
+				{
+					if(g.wep == murderWeapon && g.room == murderRoom && g.murderer == murderCharacter)
+					{
+						// WINNER
+						uiVendor.DisplayMessage(CluedoMessage.Winner, i+1, players.get(i));
+						this.running = false;
+						break;
+					}
+					else
+					{
+						//LOSER
+						uiVendor.DisplayMessage(CluedoMessage.Loser, i+1, players.get(i));
+						this.running = false;
+						break;
+					}
+				}
+				else
+				{
+					GameObject givenCard = null;
+					for(int j = 0; j < this.nPlayers; j++)
+					{
+						if(j == i) continue;
+						if(players.get(j).cards.contains(g.murderer) && !players.get(i).cards.contains(g.murderer))
+						{
+							givenCard = g.murderer;
+							break;
+						}
+						else if(players.get(j).cards.contains(g.wep) && !players.get(i).cards.contains(g.wep))
+						{
+							givenCard = g.wep;
+							break;
+						}
+						else if(players.get(j).cards.contains(g.room) && !players.get(i).cards.contains(g.room))
+						{
+							givenCard = g.room;
+							break;
+						}
+					}
+					if(givenCard != null)
+					{
+						uiVendor.DisplayMessage(CluedoMessage.FoundCard, givenCard);
+						players.get(i).GiveCard(givenCard);
+					}
+					else
+						uiVendor.DisplayMessage(CluedoMessage.NoCards);
+				}
 			}
 		}
 	}
