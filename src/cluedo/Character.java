@@ -1,7 +1,5 @@
 package cluedo;
 
-import java.util.*;
-
 public class Character extends GameObject {
 	private int xPos;
 	private int yPos;
@@ -10,7 +8,7 @@ public class Character extends GameObject {
 		this.SetName(n);
 	}
 	
-	public int getxPos() {
+		public int getxPos() {
 		return xPos;
 	}
 
@@ -60,6 +58,7 @@ public class Character extends GameObject {
 	}
 
 	public static Boolean[] characterChosen = {false, false, false, false, false, false};
+  
 
 	public static final Character[] characters = new Character[] {
 		new Character("Kasandra Scarlet"), 

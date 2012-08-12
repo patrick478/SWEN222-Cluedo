@@ -1,5 +1,3 @@
-import java.util.*;
-
 import cluedo.*;
 
 public class Assign1 {
@@ -8,13 +6,9 @@ public class Assign1 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		int numPlayers = 0;
-		
-		Scanner scanner = new Scanner(System.in);
-		System.out.printf("Please enter the number of players: ");
-		
-		numPlayers = scanner.nextInt();
-		scanner.close();
+		// TODO MAKE THIS PROPERLY USING CluedoUI
+		System.out.println("[DEBUG] TODO Assign1.java:main sets numPlayers = 4");
+		int numPlayers = 4;
 		
 		Cluedo cluedo = new Cluedo(numPlayers);
 		
