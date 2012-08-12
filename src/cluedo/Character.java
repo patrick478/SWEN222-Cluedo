@@ -3,8 +3,31 @@ package cluedo;
 import java.util.*;
 
 public class Character extends GameObject {
+	private int xPos;
+	private int yPos;
+
 	public Character(String n) {
 		this.SetName(n);
+	}
+	
+	public int getxPos() {
+		return xPos;
+	}
+
+	public void setxPos(int xPos) {
+		if(0 <= xPos && xPos<=24)
+		this.xPos = xPos;
+		else System.out.println("Invalid xPsoition");
+	}
+
+	public int getyPos() {
+		return yPos;
+	}
+
+	public void setyPos(int yPos) {
+		if(0 <= yPos && yPos<=28)
+			this.yPos = yPos;
+			else System.out.println("Invalid yPosition");
 	}
 
 	public static Character SelectCharacter() {
