@@ -4,8 +4,7 @@ public class Pair {
     private int first = 0;
     private int second = 0;
 
-    public Pair(int first, int second) {
-        super();
+    public Pair(int first, int second) {        
         this.first = first;
         this.second = second;
     }

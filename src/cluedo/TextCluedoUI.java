@@ -83,7 +83,7 @@ public class TextCluedoUI implements CluedoUI {
 	public Guess GetGuess(Player p)
 	{
 		Guess newGuess = new Guess();
-		newGuess.room = Room.rooms.get("Spa");
+		newGuess.room = null;
 		
 		int choice = -1;
 		
@@ -133,5 +133,32 @@ public class TextCluedoUI implements CluedoUI {
 		choice = -1;
 		
 		return newGuess;
+	}
+
+	@Override
+	public Movement PresentMovements(Player p, Movement[] m, int totalDice) {
+		int choice = -1;
+
+		System.out.printf("Where would you like to move too?\n");
+		
+		while(true)
+		{
+			for(int i = 0; i < m.length; i++)
+			{
+				if(m[i].stepsRequired > totalDice)
+					System.out.printf("%d) Move %d steps towards %s which is %d steps away\n", i+1, totalDice, m[i].finalRoom.GetName(), m[i].stepsRequired);
+				else
+					System.out.printf("%d) Move to %s\n", i+1, m[i].finalRoom.GetName());
+			}
+		 	System.out.printf("Which move would you like to make? ");
+
+		 	choice = input.nextInt() - 1;
+		 	if(choice >= 0 && choice < m.length)
+		 		return m[choice];
+		 	else
+		 	{
+		 		System.out.printf("You need to enter a valid selection");
+		 	}
+		}
 	}
 }
