@@ -2,9 +2,16 @@ package cluedo;
 
 public class Player {
 
+	private Character playerChar;
+	public Character GetCharacter() {
+		return this.playerChar;
+	}
 	public void SetCharacter(Character selectCharacter) {
-		// TODO Auto-generated method stub
-		
+		this.playerChar = selectCharacter;
+	}
+	
+	public void TakeTurn()
+	{
 	}
 
 }
