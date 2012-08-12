@@ -8,3 +8,4 @@ enum CluedoMessage
 public interface CluedoUI {
 	public void DisplayMessage(CluedoMessage msg, Object... args);
 }
+
