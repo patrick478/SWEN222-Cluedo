@@ -1,15 +1,17 @@
 package cluedo;
 
+import java.util.*;
+
 public class PathfindFrame {
-	int numSteps = 0;
+	List<Pair> steps;
 	
 	int curPosX;
 	int curPosY;
 	
-	public PathfindFrame(int n, int x, int y)
+	public PathfindFrame(List<Pair> s, int x, int y)
 	{
-		this.numSteps = n;
 		this.curPosX = x;
 		this.curPosY = y;
+		this.steps = new ArrayList<Pair>(s);
 	}
 }

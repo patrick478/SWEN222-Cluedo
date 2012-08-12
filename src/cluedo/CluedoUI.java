@@ -13,5 +13,6 @@ public interface CluedoUI {
 	public void SetRoll(int d1, int d2);
 	public void WaitAction(String msg);
 	public Guess GetGuess(Player p);
+	public Movement PresentMovements(Player p, Movement[] m, int diceTotal);
 }
 

@@ -48,12 +48,27 @@ public class Player {
 		//b.PrintBoard();
 		
 		Movement[] movements = this.PlotMovements(b);
+		Movement chosenMovement = ui.PresentMovements(this, movements, diceOne + diceTwo);
 		
-		Guess newGuess = ui.GetGuess(this);
+		if(chosenMovement.stepsRequired > diceOne + diceTwo)
+		{
+			Pair stepTarget = chosenMovement.steps.get((diceOne + diceTwo - 1));
+			this.X = stepTarget.getFirst();
+			this.Y = stepTarget.getSecond();
+		}
+		else
+		{
+			this.X = chosenMovement.finalX;
+			this.Y = chosenMovement.finalY;
+		}
 		
-		newGuess.Print();
 		
-		ui.WaitAction("[DEBUG] Paused.");
+		if(this.FindOnBoard(b) instanceof Room)
+		{
+			Guess newGuess = ui.GetGuess(this);
+			newGuess.room = (Room)this.FindOnBoard(b);
+			newGuess.Print();
+		}
 	}
 	
 	public Movement[] PlotMovements(Board board)
@@ -63,14 +78,14 @@ public class Player {
 			tested[i] = false;
 		
 		Queue<PathfindFrame> toTest = new LinkedList<PathfindFrame>();
-		toTest.add(new PathfindFrame(0, this.X, this.Y));
 		
+		toTest.add(new PathfindFrame(new ArrayList<Pair>(), this.X, this.Y));
 		
 		PathfindFrame curFrame = null;
 		while(!toTest.isEmpty())
 		{
 			curFrame = toTest.remove();
-			//System.out.printf("Started processing %d, %d with %d steps\n", curFrame.curPosX, curFrame.curPosY, curFrame.numSteps);
+			//System.out.printf("Started processing %d, %d with %d steps\n", curFrame.curPosX, curFrame.curPosY, curFrame.steps.size());
 			
 			int self = (curFrame.curPosY * board.Width) + curFrame.curPosX;
 			if(tested[self])
@@ -78,37 +93,53 @@ public class Player {
 			else
 				tested[self] = true;
 			
+			if(curFrame.steps.size() > 100)
+				continue;
+			
+			curFrame.steps.add(new Pair(curFrame.curPosX, curFrame.curPosY));
+			
 			int left = (curFrame.curPosY * board.Width) + curFrame.curPosX-1;
 			int right = (curFrame.curPosY * board.Width) + curFrame.curPosX+1;
 			int up = (curFrame.curPosY-1 * board.Width) + curFrame.curPosX;
 			int down = (curFrame.curPosY+1 * board.Width) + curFrame.curPosX;
 			
 			if(curFrame.curPosX < board.Width-1 && !tested[right])
-				toTest.add(new PathfindFrame(curFrame.numSteps+1, curFrame.curPosX+1, curFrame.curPosY));
+				toTest.add(new PathfindFrame(curFrame.steps, curFrame.curPosX+1, curFrame.curPosY));
 			if(curFrame.curPosX > 0 && !tested[left])
-				toTest.add(new PathfindFrame(curFrame.numSteps+1, curFrame.curPosX-1, curFrame.curPosY));
+				toTest.add(new PathfindFrame(curFrame.steps, curFrame.curPosX-1, curFrame.curPosY));
 			if(curFrame.curPosY < board.Height-1 && !tested[down])
-				toTest.add(new PathfindFrame(curFrame.numSteps+1, curFrame.curPosX, curFrame.curPosY+1));
-			if(curFrame.curPosY > 0)
-			{
-				if(up > 0 && !tested[up])
-					toTest.add(new PathfindFrame(curFrame.numSteps+1, curFrame.curPosX, curFrame.curPosY-1));
-			}
+				toTest.add(new PathfindFrame(curFrame.steps, curFrame.curPosX, curFrame.curPosY+1));
+			if(curFrame.curPosY > 0 && up >= 0 && !tested[up])
+					toTest.add(new PathfindFrame(curFrame.steps, curFrame.curPosX, curFrame.curPosY-1));
 				
 			if(board.boardSpaces[curFrame.curPosX][curFrame.curPosY] instanceof Door)
 			{
 				Door d = (Door)board.boardSpaces[curFrame.curPosX][curFrame.curPosY];
-				if(d.linkedRoom.tempBest > curFrame.numSteps) d.linkedRoom.tempBest = curFrame.numSteps;
+				if(d.linkedRoom.tempBest.size() > curFrame.steps.size() || d.linkedRoom.tempBest.isEmpty()) 
+				{
+					//System.out.printf("currently %d is better than %d for %s\n", curFrame.steps.size(), d.linkedRoom.tempBest.size(), d.linkedRoom.GetName());
+					d.linkedRoom.tempBest.clear();
+					d.linkedRoom.tempBest = curFrame.steps;
+				}
 			}
 			
 			
 		}
+		
+		Movement[] moves = new Movement[Room.rooms.size()];
 		for(int i = 0; i < Room.rooms.values().size(); i++)
 		{
-			System.out.printf("Can get to %s in %d steps\n", ((Room)(Room.rooms.values().toArray()[i])).GetName(), ((Room)(Room.rooms.values().toArray()[i])).tempBest);
+			Room fr = ((Room)Room.rooms.values().toArray()[i]);
+			Movement m = new Movement();
+			Pair finalStep = fr.tempBest.get(fr.tempBest.size() -1);
+			m.finalX = finalStep.getFirst();
+			m.finalY = finalStep.getSecond();
+			m.stepsRequired = fr.tempBest.size();
+			m.finalRoom = fr;
+			m.steps = fr.tempBest;
+			moves[i] = m;
 		}
-		System.out.printf("Done!");
-		return null;
+		return moves;
 	}
 	
 	public void GiveCard(GameObject card)

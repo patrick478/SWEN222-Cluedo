@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Room extends BoardTile {
 	
-	int tempBest = Integer.MAX_VALUE;
+	List<Pair> tempBest = new ArrayList<Pair>();
 	public Room(String n)
 	{
 		this.SetName(n);
