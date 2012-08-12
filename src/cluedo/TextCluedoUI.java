@@ -10,9 +10,9 @@ public class TextCluedoUI implements CluedoUI {
 	public int GetNumPlayers()
 	{
 		int n = -1;
-		while(n < 2 || n > 6)
+		while(n < 3 || n > 6)
 		{
-			System.out.printf("How many players? Enter a number between 2 - 6\n\t");
+			System.out.printf("How many players? Enter a number between 3 - 6\n\t");
 
 			n = input.nextInt();
 		}	
