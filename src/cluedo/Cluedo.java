@@ -1,5 +1,7 @@
 package cluedo;
 
+import java.util.*;
+
 public class Cluedo {
 	
 	private final int MaxPlayers = 6;
@@ -19,11 +21,19 @@ public class Cluedo {
 		
 		if(this.uiVendor == null)
 			this.uiVendor = new TextCluedoUI();
-		
-		this.uiVendor.DisplayMessage(CluedoMessage.WelcomeMessage);
-		
+				
 		Board b = new Board();
 		b.Setup();
 		b.PrintBoard();
+		
+		this.uiVendor.DisplayMessage(CluedoMessage.WelcomeMessage);
+		
+		List<Player> players = new ArrayList<Player>();
+		for(int i = 0; i < this.nPlayers; i++) 
+		{			
+			Player newPlayer = new Player();
+			newPlayer.SetCharacter(Character.selectCharacter());
+			players.add(newPlayer);
+		}
 	}
 }

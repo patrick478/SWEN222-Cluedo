@@ -11,5 +11,8 @@ public class TextCluedoUI implements CluedoUI {
 				break;
 		}
 	}
-
+	
+	public Character ChooseCharacter() {
+		return null;
+	}
 }
