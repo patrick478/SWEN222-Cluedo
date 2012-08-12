@@ -7,6 +7,18 @@ public class TextCluedoUI implements CluedoUI {
 
 	Scanner input = new Scanner(System.in);
 	
+	public int GetNumPlayers()
+	{
+		int n = -1;
+		while(n < 2 || n > 6)
+		{
+			System.out.printf("How many players? Enter a number between 2 - 6\n\t");
+		
+			n = input.nextInt();
+		}	
+		return n;
+	}
+	
 	@Override
 	public void DisplayMessage(CluedoMessage msg, Object... args) {
 		switch(msg)
@@ -21,11 +33,11 @@ public class TextCluedoUI implements CluedoUI {
 				System.out.printf("Looks like no one has that card. Hmm..\n");
 				break;
 			case Winner:
-				System.out.printf("The winner is [Player %d]: %s\n", args[0], ((GameObject)args[1]).GetName());
+				System.out.printf("The winner is [Player %d]: %s\n", args[0], ((Player)args[1]).GetCharacter().GetName());
 				break;
 				
 			case Loser:
-				System.out.printf("The loser is [Player %d]: %s\n", args[0], ((GameObject)args[1]).GetName());
+				System.out.printf("The loser is [Player %d]: %s\n", args[0], ((Player)args[1]).GetCharacter().GetName());
 				break;	
 		}
 	}
