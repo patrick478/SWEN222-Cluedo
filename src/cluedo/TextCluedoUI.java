@@ -7,6 +7,18 @@ public class TextCluedoUI implements CluedoUI {
 
 	Scanner input = new Scanner(System.in);
 	
+	public int GetNumPlayers()
+	{
+		int n = -1;
+		while(n < 2 || n > 6)
+		{
+			System.out.printf("How many players? Enter a number between 2 - 6\n\t");
+
+			n = input.nextInt();
+		}	
+		return n;
+	}
+	
 	@Override
 	public void DisplayMessage(CluedoMessage msg, Object... args) {
 		switch(msg)
