@@ -156,7 +156,7 @@ public class TextCluedoUI implements CluedoUI {
 	
 	public Guess GetAccusation(Player p)
 	{
-		System.out.printf("This is an accusation!! Who killed the host?");
+		System.out.printf("This is an accusation!! Who killed the host?\n");
 		Guess gn = this.GetGuess(p);
 		
 		int choice = -1;

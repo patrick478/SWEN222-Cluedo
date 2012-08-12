@@ -92,7 +92,6 @@ public class Game {
 					GameObject givenCard = null;
 					for(int j = 0; j < this.nPlayers; j++)
 					{
-						
 						if(j == i) continue;
 						if(players.get(j).cards.contains(g.murderer) && !players.get(i).cards.contains(g.murderer))
 						{
