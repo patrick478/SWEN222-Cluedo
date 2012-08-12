@@ -14,7 +14,6 @@ public class TextCluedoUI implements CluedoUI {
 			case WelcomeMessage:
 				System.out.println("================================================");
 				System.out.println("================================================");
-
 				System.out.println("             Welcome to CLUEDO");
 				System.out.println("                Version 1.0");
 				System.out.println("  Written by Ben Anderson and Patrick Barnes");
@@ -210,7 +209,7 @@ public class TextCluedoUI implements CluedoUI {
 	public Movement PresentMovements(Player p, Movement[] m, int totalDice) {
 		int choice = -1;
 
-		System.out.printf("Where would you like to move too?\n");
+		System.out.printf("\n\nWhere would you like to move too?\n");
 		
 		while(true)
 		{
@@ -223,14 +222,14 @@ public class TextCluedoUI implements CluedoUI {
 					System.out.printf("%d) Move to %s\n", i+1, m[i].finalRoom.GetName());
 			}
 			
-		 	System.out.printf("Which move would you like to make? ");
+		 	System.out.printf("\n\nWhich move would you like to make? ");
 
 		 	choice = input.nextInt() - 1;
 		 	if(choice >= 0 && choice < m.length)
 		 		return m[choice];
 		 	else
 		 	{
-		 		System.out.printf("You need to enter a valid selection");
+		 		System.out.printf("\nYou need to enter a valid selection");
 		 	}
 		}
 	}
