@@ -71,6 +71,7 @@ public class Game {
 			{
 				uiVendor.SetTurn(i+1, players.get(i), b);
 				Guess g = players.get(i).TakeTurn(uiVendor, b);
+				if(g == null) continue;
 				if(g.isAccusation)
 				{
 					if(g.wep == murderWeapon && g.room == murderRoom && g.murderer == murderCharacter)
