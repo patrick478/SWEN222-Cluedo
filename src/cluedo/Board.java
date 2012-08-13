@@ -50,10 +50,6 @@ public class Board {
 		//Pool
 		this.SetRegion(10, 11, 17, 16, Room.rooms.get("Pool"));
 		this.SetDoor(14, 11, new Door(Room.rooms.get("Pool")));
-		this.SetDoor(10, 12, new Door(Room.rooms.get("Pool")));
-		this.SetDoor(010, 13, new Door(Room.rooms.get("Pool")));
-		this.SetDoor(10, 14, new Door(Room.rooms.get("Pool")));
-		this.SetDoor(10, 15, new Door(Room.rooms.get("Pool")));
 		this.SetDoor(11, 16, new Door(Room.rooms.get("Pool")));
 		this.SetDoor(17, 16, new Door(Room.rooms.get("Pool")));
 
