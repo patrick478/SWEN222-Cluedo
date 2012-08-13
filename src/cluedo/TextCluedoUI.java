@@ -217,7 +217,7 @@ public class TextCluedoUI implements CluedoUI {
 					seenCard = "X";
 				System.out.printf("%d) [%s] %s\n", i+1, seenCard, roomList[i].GetName());
 			}
-		 	System.out.printf("\nWhich room do you think it was? ");
+		 	System.out.printf("\nChoose room: ");
 
 		 	choice = input.nextInt() - 1;
 		 	if(choice >= 0 && choice < roomList.length)
