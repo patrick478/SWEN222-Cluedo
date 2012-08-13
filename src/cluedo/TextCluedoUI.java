@@ -117,7 +117,6 @@ public class TextCluedoUI implements CluedoUI {
 		try {
 			System.in.read();
 		} catch (IOException e) {
-			// TODO Make this ignore *more* silently
 		}
 	}
 	
@@ -244,5 +243,11 @@ public class TextCluedoUI implements CluedoUI {
 		 		System.out.printf("\nYou need to enter a valid selection");
 		 	}
 		}
+	}
+
+	@Override
+	public void NotifyMoved(int nSteps, Room curRoom) {
+		System.out.printf("You're now %d steps away", nSteps);
+		
 	}
 }

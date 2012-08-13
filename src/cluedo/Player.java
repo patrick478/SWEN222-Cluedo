@@ -54,6 +54,7 @@ public class Player {
 			Pair stepTarget = chosenMovement.steps.get((diceOne + diceTwo - 1));
 			this.X = stepTarget.getFirst();
 			this.Y = stepTarget.getSecond();
+			ui.NotifyMoved(chosenMovement.stepsRequired - (diceOne + diceTwo), chosenMovement.finalRoom);
 		}
 		else
 		{
@@ -64,7 +65,7 @@ public class Player {
 		
 		Room tRoom = null;
 		BoardTile tile = this.FindOnBoard(b);
-		if(tile instanceof Room)
+		if(tile instanceof Room && tile != Room.Empty && tile != null)
 		{		
 			tRoom = (Room)tile;
 		}
@@ -107,32 +108,56 @@ public class Player {
 		while(!toTest.isEmpty())
 		{
 			curFrame = toTest.remove();
-			//System.out.printf("Started processing %d, %d with %d steps\n", curFrame.curPosX, curFrame.curPosY, curFrame.steps.size());
-			
+						
 			int self = (curFrame.curPosY * board.Width) + curFrame.curPosX;
 			if(tested[self])
 				continue;
 			else
-				tested[self] = true;
+				tested[self] = true;			
 			
-			if(curFrame.steps.size() > 100)
+				//System.out.printf("Started processing %d, %d with %d steps:", curFrame.curPosX, curFrame.curPosY, curFrame.steps.size());
+			if(board.boardSpaces[curFrame.curPosX][curFrame.curPosY] instanceof Door || board.boardSpaces[curFrame.curPosX][curFrame.curPosY] == null)
+			{
+				//if(board.boardSpaces[curFrame.curPosX][curFrame.curPosY] != null) System.out.printf("%s", board.boardSpaces[curFrame.curPosX][curFrame.curPosY].getClass().getName());
+				//else System.out.printf("null");
+				
+			}
+			else
+			{
 				continue;
+			}
+			//System.out.println();
+			
+			
+			
 			
 			curFrame.steps.add(new Pair(curFrame.curPosX, curFrame.curPosY));
 			
 			int left = (curFrame.curPosY * board.Width) + curFrame.curPosX-1;
 			int right = (curFrame.curPosY * board.Width) + curFrame.curPosX+1;
-			int up = (curFrame.curPosY-1 * board.Width) + curFrame.curPosX;
-			int down = (curFrame.curPosY+1 * board.Width) + curFrame.curPosX;
+			int up = ((curFrame.curPosY-1) * board.Width) + curFrame.curPosX;
+			int down = ((curFrame.curPosY+1) * board.Width) + curFrame.curPosX;
 			
 			if(curFrame.curPosX < board.Width-1 && !tested[right])
+			{
 				toTest.add(new PathfindFrame(curFrame.steps, curFrame.curPosX+1, curFrame.curPosY));
+				//System.out.printf("Moved right\n");
+			}
 			if(curFrame.curPosX > 0 && !tested[left])
+			{
 				toTest.add(new PathfindFrame(curFrame.steps, curFrame.curPosX-1, curFrame.curPosY));
+				//System.out.printf("Moved left\n");
+			}
 			if(curFrame.curPosY < board.Height-1 && !tested[down])
+			{
 				toTest.add(new PathfindFrame(curFrame.steps, curFrame.curPosX, curFrame.curPosY+1));
-			if(curFrame.curPosY > 0 && up >= 0 && !tested[up])
-					toTest.add(new PathfindFrame(curFrame.steps, curFrame.curPosX, curFrame.curPosY-1));
+				//System.out.printf("Moved down\n");
+			}
+			if(curFrame.curPosY > 0 && !tested[up])
+			{
+				toTest.add(new PathfindFrame(curFrame.steps, curFrame.curPosX, curFrame.curPosY-1));
+				//System.out.printf("Moved up\n");
+			}
 				
 			if(board.boardSpaces[curFrame.curPosX][curFrame.curPosY] instanceof Door)
 			{
@@ -153,6 +178,7 @@ public class Player {
 		{
 			Room fr = ((Room)Room.rooms.values().toArray()[i]);
 			Movement m = new Movement();
+			//System.out.printf("Testing for %s. size=%d\n", fr.GetName(), fr.tempBest.size());
 			Pair finalStep = fr.tempBest.get(fr.tempBest.size() -1);
 			m.finalX = finalStep.getFirst();
 			m.finalY = finalStep.getSecond();

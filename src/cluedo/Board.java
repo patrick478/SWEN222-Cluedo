@@ -19,7 +19,6 @@ public class Board {
 		Room.rooms.put("Kitchen", new Room("Kitchen"));
 		Room.rooms.put("Guest House", new Room("Guest House"));
 
-
 		
 		//Spa
 		this.SetRegion(0, 0, 5, 5, Room.rooms.get("Spa"));
@@ -27,7 +26,6 @@ public class Board {
 		this.SetDoor(5, 5, new Door(Room.rooms.get("Spa")));
 		
 		
-
 		//Theatre
 		this.SetRegion(8, 0, 12, 7 , Room.rooms.get("Theatre"));
 		this.SetDoor(10, 7, new Door(Room.rooms.get("Theatre")));
@@ -83,6 +81,7 @@ public class Board {
 		this.SetRegion(21, 20, 23, 20, Room.rooms.get("Guest House"));
 		this.SetDoor(20, 20, new Door(Room.rooms.get("Guest House")));
 		
+		//this.PrintBoard();
 		
 	}
 	
@@ -102,7 +101,13 @@ public class Board {
 	
 	public void PrintBoard()
 	{
+		System.out.printf("   ");
+		for(int i = 0; i < Width; i++) {
+			System.out.printf(" %d", i%10);
+		}
+		System.out.println();
 		for(int i = 0; i < Height; i++) {
+			System.out.printf("%d] ", i);
 			for(int j = 0; j < Width; j++) {
 				if(this.boardSpaces[j][i] != null)
 					System.out.printf(" %c", this.boardSpaces[j][i].ShortName());
