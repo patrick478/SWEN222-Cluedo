@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,7 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
-public class GUI extends JFrame implements CluedoUI, MouseListener {
+public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListener {
 
 	public static double xOffset = 12;
 	public static double yOffset = 12;
@@ -156,7 +158,12 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 		fileExit.setToolTipText("Exit application");
 		fileExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				System.exit(0);
+				int r = JOptionPane.showConfirmDialog(frame, new JLabel(
+						"Are you sure you wish to exit?"), "Confirm Exit",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (r == JOptionPane.YES_OPTION) {
+					System.exit(0);
+				}
 			}
 
 		});
@@ -170,7 +177,8 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 		frame.setJMenuBar(jMenuBar1);
 
 		frame.setPreferredSize(new Dimension(516,670));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(this);
 
 		controls = new JPanel();
 
@@ -244,8 +252,6 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 		controls.add(diceControl, BorderLayout.WEST);
 		
 		frame.add(controls);
-
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -438,5 +444,28 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 		canvas.repaint();
 	}
 
+	public void windowClosing(WindowEvent e) {
+		// Ask the user to confirm they wanted to do this
+		int r = JOptionPane.showConfirmDialog(this, new JLabel(
+				"Are you sure you wish to exit?"), "Confirm Exit",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if (r == JOptionPane.YES_OPTION) {
+			System.exit(0);
+		}
+	}
+
+	/**
+	 * This method is called after the X button has been depressed.
+	 * @param e
+	 */
+	public void windowClosed(WindowEvent e) {}
+
+	// The following methods are part of the WindowListener interface,
+	// but are not needed here.
+	public void windowActivated(WindowEvent e) {}
+	public void windowDeactivated(WindowEvent e) {}
+	public void windowDeiconified(WindowEvent e) {}
+	public void windowIconified(WindowEvent e) {}
+	public void windowOpened(WindowEvent e) {}
 
 }
