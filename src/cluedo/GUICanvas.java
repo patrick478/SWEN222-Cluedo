@@ -18,10 +18,10 @@ public class GUICanvas extends Canvas{
 	public void paint(Graphics g)
 	{
 		g.drawImage(this.boardImage, 0, 0, null);
-		double xOffset = 14.5;
-		double yOffset = 14.5;
-		double xSize = 19.5;
-		double ySize = 19.75;
+		double xOffset = 12;
+		double yOffset = 12;
+		double xSize = 16.25;
+		double ySize = 16.44;
 		for(int x = 0; x < 24; x++)
 		{
 			for(int y = 0; y < 29; y++)

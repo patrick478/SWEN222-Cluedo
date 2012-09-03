@@ -88,7 +88,7 @@ public class GUI extends JFrame implements CluedoUI {
 
 		frame.setJMenuBar(jMenuBar1);
 		
-		frame.setPreferredSize(new Dimension(616,750));
+		frame.setPreferredSize(new Dimension(516,750));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		controls = new JPanel();
@@ -96,7 +96,7 @@ public class GUI extends JFrame implements CluedoUI {
 		canvas = new GUICanvas();
 		controls.setLayout(new BorderLayout());
 		
-		canvas.setSize(600, 600);
+		canvas.setSize(500, 600);
 		controls.add(canvas, BorderLayout.CENTER);
 
 
