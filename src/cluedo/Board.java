@@ -1,8 +1,8 @@
 package cluedo;
 
 public class Board {
-	public final int Width = 24;
-	public final int Height = 29;
+	public static final int Width = 24;
+	public static final int Height = 29;
 	public BoardTile[][] boardSpaces = new BoardTile[Width][Height];
 	
 	public void Setup()
