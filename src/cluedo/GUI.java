@@ -1,6 +1,9 @@
 package cluedo;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -10,7 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
-public class GUI extends JFrame implements CluedoUI, MouseListener {
+public class GUI extends JFrame implements CluedoUI, MouseListener, ActionListener {
 
 	public static double xOffset = 12;
 	public static double yOffset = 12;
@@ -40,6 +43,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	public boolean chooseMovementsMode = false;
 	public Movement[] movements = null;
 	public int roll = 0;
+	private JMenuItem fileExit;
 
 	public GUI()  {
 		setupFrame();
@@ -112,6 +116,10 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 		jMenu2 = new javax.swing.JMenu();
 
 		jMenu1.setText("File");
+		
+		fileExit = new JMenuItem("Exit",
+                KeyEvent.VK_T);
+		jMenu1.add(fileExit);
 		jMenuBar1.add(jMenu1);
 
 		jMenu2.setText("Game");
@@ -264,7 +272,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 
 	@Override
 	public void SetRoll(int d1, int d2) {
-		System.out.printf("Setting dice to %d %d\n", d1, d2);
+		//System.out.printf("Setting dice to %d %d\n", d1, d2);
 		setDice(d1, d2);
 		
 		
@@ -346,5 +354,14 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	@Override
 	public void Repaint() {
 		canvas.repaint();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if(arg0.getSource().equals(fileExit)){
+			System.out.println("close");
+			System.exit(0);
+		}
+		
 	}	
 }
