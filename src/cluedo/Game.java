@@ -10,10 +10,12 @@ public class Game {
 	
 	private CluedoUI uiVendor = null;
 	
-	public Game(int numPlayers, CluedoUI ui)
+	public Game(int nPlayers, CluedoUI ui)
 	{
-		this.nPlayers = numPlayers;
 		this.uiVendor = ui;
+
+		this.uiVendor.DisplayMessage(CluedoMessage.WelcomeMessage);
+		this.nPlayers = ui.GetNumPlayers();
 	}
 	
 	public void Start() throws CluedoException
@@ -37,7 +39,6 @@ public class Game {
 		// Debug
 		//b.PrintBoard();
 		
-		this.uiVendor.DisplayMessage(CluedoMessage.WelcomeMessage);
 		
 		List<Player> players = new ArrayList<Player>();
 		for(int i = 0; i < this.nPlayers; i++) 
