@@ -36,6 +36,10 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	private ImageIcon dice6 = makeImageIcon("src/resources/dice6.jpg");
 
 	private JButton rollDice = new JButton("Roll Dice");
+	
+	public boolean chooseMovementsMode = false;
+	public Movement[] movements = null;
+	public int roll = 0;
 
 	public GUI()  {
 		setupFrame();
@@ -83,8 +87,8 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 			case 2: diceHolder1.setIcon(dice2);
 			case 3: diceHolder1.setIcon(dice3);
 			case 4: diceHolder1.setIcon(dice4);
-			case 5: diceHolder1.setIcon(dice5);;
-			default: diceHolder1.setIcon(dice6);
+			case 5: diceHolder1.setIcon(dice5);
+			default: diceHolder1.setIcon(dice6);	
 			
 		}
 		
@@ -97,6 +101,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 			case 5: diceHolder2.setIcon(dice5);
 			default: diceHolder2.setIcon(dice6);		
 		}
+		diceControl.repaint();
 	}
 
 
@@ -259,8 +264,10 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 
 	@Override
 	public void SetRoll(int d1, int d2) {
-		// TODO Auto-generated method stub
-
+		System.out.printf("Setting dice to %d %d\n", d1, d2);
+		setDice(d1, d2);
+		
+		
 	}
 
 
@@ -287,6 +294,11 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 
 	@Override
 	public Movement PresentMovements(Player p, Movement[] m, int diceTotal) {
+		this.movements = m;
+		this.chooseMovementsMode = true;
+		this.roll = diceTotal;
+		this.Repaint();
+		
 		return null;
 	}
 
@@ -299,7 +311,12 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent me) {
+		int moveToX = GUI.getBoardXFromCoord(me.getX());
+		int moveToY = GUI.getBoardYFromCoord(me.getY());
+		
 		System.out.printf("You clicked at: %d, %d\n", GUI.getBoardXFromCoord(me.getX()), GUI.getBoardYFromCoord(me.getY()));
+		
+		notify();
 	}
 
 	@Override

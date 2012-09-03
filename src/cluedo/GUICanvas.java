@@ -18,6 +18,8 @@ public class GUICanvas extends Canvas{
 	
 	private boolean drawGrid = false;
 	
+	private GUI ui;
+	
 	public GUICanvas(GUI ui)
 	{
 		this.boardImage = makeImage("src/resources/board.jpg");
@@ -27,6 +29,7 @@ public class GUICanvas extends Canvas{
 		this.greenColor = new Color(0, 128, 0);
 		this.peacockColor = new Color(0, 0, 255);
 		this.plumColor = new Color(142, 69, 133);
+		this.ui = ui;
 		
 	}
 	
@@ -53,6 +56,34 @@ public class GUICanvas extends Canvas{
 				}
 			}
 		}
+		
+		if(ui.chooseMovementsMode)
+		{
+			boolean[][] moveable = new boolean[Board.Width][Board.Height];
+			for(Movement m : ui.movements)
+			{
+				int c = 0;
+				for(Pair p : m.steps)
+				{
+					moveable[p.getFirst()][p.getSecond()] = true;
+					c++;
+					if(c > ui.roll) break;
+				}
+			}
+			
+			for(int x = 0; x < 24; x++)
+			{
+				for(int y = 0; y < 29; y++)
+				{
+					if(moveable[x][y])
+					{
+						g.setColor(new Color(0, 255, 0, 70));
+						g.fillRect((int)((x * GUI.xSize) + GUI.xOffset),(int)((y * GUI.ySize) + GUI.yOffset), (int)GUI.xSize, (int)GUI.ySize);
+					}
+				}
+			}
+		}
+		
 		
 		for(Character c : Character.characters)
 		{
