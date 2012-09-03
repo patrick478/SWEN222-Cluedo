@@ -71,14 +71,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	
 	private ImageIcon makeImageIcon(String filename)
 	{		
-		// using the URL means the image loads when stored
-		// in a jar or expanded into individual files.
-		java.net.URL imageURL = GUI.class.getResource(filename);
-
-		ImageIcon icon = null;
-		if (imageURL != null) {
-			icon = new ImageIcon(imageURL);
-		}
+		ImageIcon icon = new ImageIcon(filename);
 		return icon;
 	}	
 
@@ -128,23 +121,39 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 			
 		controls.setLayout(new BorderLayout());
 		
-		canvas = new GUICanvas();
+		canvas = new GUICanvas(this);
 		canvas.addMouseListener(this);
 		canvas.setSize(500, 500);
-		controls.add(canvas, BorderLayout.CENTER);
+		controls.add(canvas, BorderLayout.NORTH);
 
-
-		diceControl = new JPanel();
-		diceControl.setLayout(new GridLayout(1, 2));
-		diceControl.add(rollDice);
+		
+		diceControl = new JPanel(new GridBagLayout());
+		diceControl.setSize(120, 80);
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1;
+		c.weighty = 1;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 0;
+		diceControl.add(rollDice, c);
 
 		setDice(1,1);
 
-		diceControl.add(diceHolder1);
-		diceControl.add(diceHolder2);
-
-		controls.add(diceControl,BorderLayout.SOUTH);
-
+		c.weightx = 0.5;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		diceControl.add(diceHolder1, c);
+		
+		c.gridx = 1;
+		c.gridy = 1;
+		c.weightx = 0.5;
+		c.insets = new Insets(0,10,0,0);
+		diceControl.add(diceHolder2, c);
+		
+		controls.add(diceControl, BorderLayout.WEST);
 		frame.add(controls);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -290,7 +299,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent me) {
-		System.out.printf("You clicked at: %d, %d\n", this.getBoardXFromCoord(me.getX()), this.getBoardYFromCoord(me.getY()));
+		System.out.printf("You clicked at: %d, %d\n", GUI.getBoardXFromCoord(me.getX()), GUI.getBoardYFromCoord(me.getY()));
 	}
 
 	@Override
