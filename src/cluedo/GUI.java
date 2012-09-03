@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -21,6 +22,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSplitPane;
 
 
@@ -38,7 +40,7 @@ public class GUI extends JFrame implements CluedoUI {
 	private static JMenu jMenu2;
 	private static JMenuBar jMenuBar1;
 
-	
+
 
 	private static ImageIcon dice1 = makeImageIcon("src/resources/dice1.jpg");
 	private static ImageIcon dice2 = makeImageIcon("src/resources/dice2.jpg");
@@ -60,23 +62,23 @@ public class GUI extends JFrame implements CluedoUI {
 		// using the URL means the image loads when stored
 		// in a jar or expanded into individual files.
 		java.net.URL imageURL = GUI.class.getResource(filename);
-		
+
 		ImageIcon icon = null;
 		if (imageURL != null) {
 			icon = new ImageIcon(imageURL);
 		}
 		return icon;
 	}	
-	
+
 	public static void setDice(int first, int second){
 		switch(first){
-			case 1: diceHolder1.setIcon(dice1);
-			case 2: diceHolder1.setIcon(dice2);
-			case 3: diceHolder1.setIcon(dice3);
-			case 4: diceHolder1.setIcon(dice4);
-			case 5: diceHolder1.setIcon(dice5);;
-			default: diceHolder1.setIcon(dice6);
-			
+		case 1: diceHolder1.setIcon(dice1);
+		case 2: diceHolder1.setIcon(dice2);
+		case 3: diceHolder1.setIcon(dice3);
+		case 4: diceHolder1.setIcon(dice4);
+		case 5: diceHolder1.setIcon(dice5);;
+		default: diceHolder1.setIcon(dice6);
+
 		}
 		switch(second){
 		case 1: diceHolder2.setIcon(dice1);
@@ -86,8 +88,8 @@ public class GUI extends JFrame implements CluedoUI {
 		case 5: diceHolder2.setIcon(dice5);;
 		default: diceHolder2.setIcon(dice6);
 
-		
-	}
+
+		}
 	}
 
 
@@ -129,16 +131,16 @@ public class GUI extends JFrame implements CluedoUI {
 		controls = new JPanel();
 		controls.setLayout(new BorderLayout());
 
-		
-		
+
+
 		diceControl = new JPanel();
-		diceControl.setLayout(new BorderLayout());
-		diceControl.add(rollDice, BorderLayout.NORTH);
-		
+		diceControl.setLayout(new GridLayout(0,1));
+		diceControl.add(rollDice);
+
 		setDice(1,1);
-		
-		diceControl.add(diceHolder1,BorderLayout.SOUTH);
-		diceControl.add(diceHolder2, BorderLayout.SOUTH);
+
+		diceControl.add(diceHolder1);
+		diceControl.add(diceHolder2);
 
 
 
@@ -150,6 +152,7 @@ public class GUI extends JFrame implements CluedoUI {
 
 		frame.add(splitPane, BorderLayout.CENTER);
 
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -160,6 +163,7 @@ public class GUI extends JFrame implements CluedoUI {
 	@Override
 	public int GetNumPlayers() {
 		Object[] options = {"3", "4", "5", "6"};
+
 		String reply = (String)JOptionPane.showInputDialog(null, "How many players?", "Number of players", JOptionPane.PLAIN_MESSAGE, null, options, "ham");
 		int numPlayers = 0;
 		try
@@ -177,13 +181,39 @@ public class GUI extends JFrame implements CluedoUI {
 	@Override
 	public void DisplayMessage(CluedoMessage msg, Object... args) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public Character ChooseCharacter(int playerIndex) {
-		// TODO Auto-generated method stub
+
+		int numChars = 0;
+		for(Character c :  Character.characters)
+			if(!c.isChosen) numChars++;
+
+
+		String[] charactersToShow = new String[numChars];
+
+		int i = 0;
+		for(Character c :  Character.characters){
+			if(!c.isChosen){
+				charactersToShow[i] = c.GetName();
+				i++;
+			}
+		}
+
+		String reply = (String)JOptionPane.showInputDialog(null, "Player " + playerIndex + ", please select character to play as", "Player "+ playerIndex +" Character Selection", JOptionPane.PLAIN_MESSAGE, null, charactersToShow, Character.characters[0]);
+
+		for(Character c: Character.characters){
+			if(reply.equals(c.GetName())) {
+				c.isChosen = true;
+				return c;
+			}
+		}
+
+
+
 		return null;
 	}
 
@@ -191,28 +221,28 @@ public class GUI extends JFrame implements CluedoUI {
 	@Override
 	public void SetTurn(int playerIndex, Player p, Board b) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void SetPosition(BoardTile bt) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void SetRoll(int d1, int d2) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void WaitAction(String msg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
@@ -240,7 +270,7 @@ public class GUI extends JFrame implements CluedoUI {
 	@Override
 	public void NotifyMoved(int nSteps, Room r) {
 		// TODO Auto-generated method stub
-		
+
 	}	
 
 
