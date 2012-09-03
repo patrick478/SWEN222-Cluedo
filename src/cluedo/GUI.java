@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
-public class GUI extends JFrame implements CluedoUI, MouseListener, ActionListener {
+public class GUI extends JFrame implements CluedoUI, MouseListener {
 
 	public static double xOffset = 12;
 	public static double yOffset = 12;
@@ -119,8 +119,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, ActionListen
 
 		jMenu1.setText("File");
 
-		fileExit = new JMenuItem("Exit",
-				KeyEvent.VK_T);
+		fileExit = new JMenuItem("Exit");
 		fileExit.setToolTipText("Exit application");
 		fileExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
