@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,23 +22,27 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 	public static double yOffset = 12;
 	public static double xSize = 16.25;
 	public static double ySize = 16.44;
-
+	private Player currentPlayer;
 	private JFrame frame;
 	private JPanel controls; 
 	private JPanel diceControl; 
 	private JLabel diceHolder1 = new JLabel();
 	private JLabel diceHolder2= new JLabel();
-	
+
 	private JLabel turnText;
 	private JLabel characterText;
 	private JLabel instructionsText;
-	
+
 	private JButton cardsButton = new JButton("Cards");
 	private JButton checklistButton = new JButton("Checklist");
-	
+
 	private JMenu jMenu1;
 	private JMenu jMenu2;
 	private JMenuBar jMenuBar1;
+	private JMenuItem fileExit;
+	private JMenuItem gameShowCards;
+	private JMenuItem gameShowNotebook;
+
 	private GUICanvas canvas;
 
 	private ImageIcon dice1 = makeImageIcon("src/resources/dice1.jpg");
@@ -51,7 +56,6 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 	public boolean chooseMovementsMode = false;
 	public Movement[] movements = null;
 	public int roll = 0;
-	private JMenuItem fileExit;
 	private Player playerSelecting;
 	int[][] moveables;
 
@@ -97,48 +101,48 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 	{
 		switch(first)
 		{
-			case 1: 
-				diceHolder1.setIcon(dice1);
-				break;
-			case 2: 
-				diceHolder1.setIcon(dice2);
-				break;
-			case 3: 
-				diceHolder1.setIcon(dice3);
-				break;
-			case 4: 
-				diceHolder1.setIcon(dice4);
-				break;
-			case 5: 
-				diceHolder1.setIcon(dice5);
-				break;
-			case 6: 
-			default:
-				diceHolder1.setIcon(dice6);
-				break;
+		case 1: 
+			diceHolder1.setIcon(dice1);
+			break;
+		case 2: 
+			diceHolder1.setIcon(dice2);
+			break;
+		case 3: 
+			diceHolder1.setIcon(dice3);
+			break;
+		case 4: 
+			diceHolder1.setIcon(dice4);
+			break;
+		case 5: 
+			diceHolder1.setIcon(dice5);
+			break;
+		case 6: 
+		default:
+			diceHolder1.setIcon(dice6);
+			break;
 		}
 
 		switch(second)
 		{
-			case 1: 
-				diceHolder2.setIcon(dice1);
-				break;
-			case 2: 
-				diceHolder2.setIcon(dice2);
-				break;
-			case 3: 
-				diceHolder2.setIcon(dice3);
-				break;
-			case 4: 
-				diceHolder2.setIcon(dice4);
-				break;
-			case 5: 
-				diceHolder2.setIcon(dice5);
-				break;
-			case 6: 
-			default:
-				diceHolder2.setIcon(dice6);
-				break;
+		case 1: 
+			diceHolder2.setIcon(dice1);
+			break;
+		case 2: 
+			diceHolder2.setIcon(dice2);
+			break;
+		case 3: 
+			diceHolder2.setIcon(dice3);
+			break;
+		case 4: 
+			diceHolder2.setIcon(dice4);
+			break;
+		case 5: 
+			diceHolder2.setIcon(dice5);
+			break;
+		case 6: 
+		default:
+			diceHolder2.setIcon(dice6);
+			break;
 		}
 		diceHolder1.repaint();
 		diceHolder2.repaint();
@@ -167,7 +171,29 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 
 		});
 
+		gameShowCards = new JMenuItem("Show Cards");
+		gameShowCards.setToolTipText("Show a list of the cards that you currently hold.");
+		gameShowCards.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				showCards(currentPlayer);
+				System.out.println("Showing cards");
+			}
+
+		});
+		gameShowNotebook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				showNotebook();
+				System.out.println("Showing notebook");
+			}
+
+		});
+		gameShowNotebook = new JMenuItem("Show Notebook");
+		gameShowNotebook.setToolTipText("Show the notebook, with a record of what cards you have seen so far.");
+
 		jMenu1.add(fileExit);
+		jMenu2.add(gameShowCards);
+		jMenu2.add(gameShowNotebook);
+
 		jMenuBar1.add(jMenu1);
 
 		jMenu2.setText("Game");
@@ -216,8 +242,8 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 		c.weightx = 0.5;
 		c.insets = new Insets(0,10,0,0);
 		diceControl.add(diceHolder2, c);
-		
-		
+
+
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(0, 10, 0, 0);
@@ -225,31 +251,31 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 		c.gridy = 0;
 		turnText = new JLabel("It's Player 1's turn.");
 		diceControl.add(turnText, c);
-		
+
 		c.gridx = 2;
 		c.gridy = 1;
 		c.gridheight = 2;
 		characterText = new JLabel("Go, Kasandra Scarlet!");
 		characterText.setFont(characterText.getFont().deriveFont(26.0f));
 		diceControl.add(characterText, c);
-		
+
 		c.gridx = 2;
 		c.gridy = 3;
 		c.gridheight = 1;
 		instructionsText = new JLabel("Click anywhere in the green area to move there");
 		diceControl.add(instructionsText, c);
-		
+
 		c.gridx = 3;
 		c.gridy = 0;
 		c.gridheight = 2;
 		c.ipady = 26;
 		diceControl.add(cardsButton, c);
-		
+
 		c.gridy = 2;
 		diceControl.add(checklistButton, c);
-		
+
 		controls.add(diceControl, BorderLayout.WEST);
-		
+
 		frame.add(controls);
 
 		frame.pack();
@@ -341,6 +367,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 	public void SetTurn(int playerIndex, Player p, Board b) {
 		turnText.setText(String.format("It's Player %d's turn.", playerIndex));
 		characterText.setText(String.format("Go, %s!", p.GetCharacter().GetName()));
+		currentPlayer = p;
 	}
 
 
@@ -404,9 +431,9 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 		int moveToX = GUI.getBoardXFromCoord(me.getX());
 		int moveToY = GUI.getBoardYFromCoord(me.getY());
 		System.out.printf("You clicked at: %d, %d\n", GUI.getBoardXFromCoord(me.getX()), GUI.getBoardYFromCoord(me.getY()));
-		
+
 		if(moveables[moveToX][moveToY] == 0) return;
-		
+
 		if(this.playerSelecting != null)
 		{
 			this.playerSelecting.CompleteTurn(moveToX,  moveToY, this);
@@ -466,5 +493,19 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 	public void windowDeiconified(WindowEvent e) {}
 	public void windowIconified(WindowEvent e) {}
 	public void windowOpened(WindowEvent e) {}
+
+
+	public void showCards(Player p){
+		JFrame cardFrame = new JFrame();
+		ArrayList cards =  p.getCards();
+		for(GameObject)
+
+	}
+	
+	public void showNotebook(Player p){
+
+
+
+	}
 
 }
