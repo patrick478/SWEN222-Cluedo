@@ -17,7 +17,5 @@ public class Room extends BoardTile {
 		Random r = new Random();
 		int target = r.nextInt(rooms.size()); 
 		return (Room) ((rooms.values().toArray())[target]);
-		
-		
 	}
 }
