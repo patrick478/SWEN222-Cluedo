@@ -1,12 +1,16 @@
 package cluedo;
 
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
 
 public class Player {
 
 	private static Random random = new Random();
 	
 	private Character playerChar;
+	private Board gameBoard;
+	public Guess myGuess = null;
+	public CountDownLatch waitLatch = new CountDownLatch(1);
 	
 	List<GameObject> cards = new ArrayList<GameObject>();
 	
@@ -33,37 +37,49 @@ public class Player {
 		this.playerChar = selectCharacter;
 	}
 	
-	public Guess TakeTurn(CluedoUI ui, Board b)
+	public void TakeTurn(CluedoUI ui, Board b)
 	{
 		ui.SetPosition(this.FindOnBoard(b));
 		int diceOne = Player.random.nextInt(6)+1;
 		int diceTwo = Player.random.nextInt(6)+1;
-		
+		this.gameBoard = b;
 		ui.SetRoll(diceOne, diceTwo);
+		this.waitLatch = new CountDownLatch(1);
 		
 		// DEBUG: BABAP
 		//b.PrintBoard();
 		
 		Movement[] movements = this.PlotMovements(b);
-		Movement chosenMovement = ui.PresentMovements(this, movements, diceOne + diceTwo);
+		ui.PresentMovements(this, movements, diceOne + diceTwo);
+	}
+		
+	public void CompleteTurn(int x, int y, CluedoUI ui)
+	{
+		
+		/*
 		if(chosenMovement == null) return null;
 		
-		if(chosenMovement.stepsRequired > diceOne + diceTwo)
+		if(chosenMovement.stepsRequired > diceTotal)
 		{
-			Pair stepTarget = chosenMovement.steps.get((diceOne + diceTwo - 1));
+			Pair stepTarget = chosenMovement.steps.get(diceTotal - 1);
 			this.playerChar.X = stepTarget.getFirst();
 			this.playerChar.Y = stepTarget.getSecond();
-			ui.NotifyMoved(chosenMovement.stepsRequired - (diceOne + diceTwo), chosenMovement.finalRoom);
+			ui.NotifyMoved(chosenMovement.stepsRequired - diceTotal, chosenMovement.finalRoom);
 		}
 		else
 		{
 			this.playerChar.X = chosenMovement.finalX;
 			this.playerChar.Y = chosenMovement.finalY;
 		}
+		*/
+		
+		System.out.println("Moving to " + x + " " + y);
+		this.SetPosition(x, y);
+		ui.Repaint();
 		
 		
 		Room tRoom = null;
-		BoardTile tile = this.FindOnBoard(b);
+		BoardTile tile = this.FindOnBoard(gameBoard);
 		if(tile instanceof Room && tile != Room.Empty && tile != null)
 		{		
 			tRoom = (Room)tile;
@@ -90,7 +106,7 @@ public class Player {
 			}
 		}
 		
-		return newGuess;
+		this.myGuess = newGuess;
 	}
 	
 	public Movement[] PlotMovements(Board board)

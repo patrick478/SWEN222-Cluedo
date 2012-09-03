@@ -72,7 +72,16 @@ public class Game {
 			for(int i = 0; i < this.nPlayers; i++)
 			{
 				uiVendor.SetTurn(i+1, players.get(i), b);
-				Guess g = players.get(i).TakeTurn(uiVendor, b);
+				players.get(i).TakeTurn(uiVendor, b);
+				
+				try {
+					players.get(i).waitLatch.await();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				Guess g = players.get(i).myGuess;
 				if(g == null) continue;
 				if(g.isAccusation)
 				{
