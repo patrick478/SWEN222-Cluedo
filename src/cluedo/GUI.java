@@ -154,21 +154,19 @@ public class GUI extends JFrame implements CluedoUI {
 				
 				break;
 			case FoundCard:
-				System.out.printf("Found the %s card!\n", ((GameObject)args[0]).GetName());
+				JOptionPane.showMessageDialog(null,  "Found the "+((GameObject)args[0]).GetName()+" card!\n");
 				break;
 			case NoCards:
 				System.out.printf("Looks like no one has that card. Hmm..\n");
+				JOptionPane.showMessageDialog(null,  "Looks like no one has that card. Hmm...");
 				break;
 			case Winner:
-				System.out.println("================================================");
-				System.out.printf("The winner is [Player %d]: %s\n", args[0], ((GameObject)args[1]).GetName());
-				System.out.println("================================================");
+				
+				JOptionPane.showMessageDialog(null,  "The winner is [Player "+args[0]+"]: "+((GameObject)args[1]).GetName());
 				break;
 				
 			case Loser:
-				System.out.println("================================================");
-				System.out.printf("The loser is [Player %d]: %s\n", args[0], ((GameObject)args[1]).GetName());
-				System.out.println("================================================");
+				JOptionPane.showMessageDialog(null,  "The loser is [Player "+args[0]+"]: "+((GameObject)args[1]).GetName());
 				break;	
 		}
 
