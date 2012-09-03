@@ -19,7 +19,7 @@ public interface CluedoUI {
 	public void WaitAction(String msg);
 	public Guess GetGuess(Player p);
 	public Guess GetAccusation(Player p);
-	public Movement PresentMovements(Player p, Movement[] m, int diceTotal);
+	public void PresentMovements(Player p, Movement[] m, int diceTotal);
 	public void NotifyMoved(int nSteps, Room r);
 	
 	public void Repaint();

@@ -40,6 +40,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	public boolean chooseMovementsMode = false;
 	public Movement[] movements = null;
 	public int roll = 0;
+	private Player playerSelecting;
 
 	public GUI()  {
 		setupFrame();
@@ -101,7 +102,8 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 			case 5: diceHolder2.setIcon(dice5);
 			default: diceHolder2.setIcon(dice6);		
 		}
-		diceControl.repaint();
+		diceHolder1.repaint();
+		diceHolder2.repaint();
 	}
 
 
@@ -293,13 +295,13 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 
 
 	@Override
-	public Movement PresentMovements(Player p, Movement[] m, int diceTotal) {
+	public void PresentMovements(Player p, Movement[] m, int diceTotal) {
 		this.movements = m;
 		this.chooseMovementsMode = true;
 		this.roll = diceTotal;
-		this.Repaint();
+		this.playerSelecting = p;
 		
-		return null;
+		this.Repaint();
 	}
 
 
@@ -313,10 +315,8 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	public void mouseClicked(MouseEvent me) {
 		int moveToX = GUI.getBoardXFromCoord(me.getX());
 		int moveToY = GUI.getBoardYFromCoord(me.getY());
-		
+		this.playerSelecting.CompleteTurn(moveToX,  moveToY, this);
 		System.out.printf("You clicked at: %d, %d\n", GUI.getBoardXFromCoord(me.getX()), GUI.getBoardYFromCoord(me.getY()));
-		
-		notify();
 	}
 
 	@Override
