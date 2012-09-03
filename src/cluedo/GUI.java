@@ -324,7 +324,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 			break;
 		case Winner:
 
-			JOptionPane.showMessageDialog(null,  "The winner is [Player "+args[0]+"]: "+((GameObject)args[1]).GetName());
+			JOptionPane.showMessageDialog(null,  "The winner is [Player "+args[0]+"]: "+(((Player) args[1]).GetCharacter().GetName()));
 			break;
 
 		case Loser:
