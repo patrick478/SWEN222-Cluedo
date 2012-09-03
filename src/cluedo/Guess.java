@@ -33,4 +33,9 @@ public class Guess {
 		else
 			System.out.printf("[BUG!] (This shouldn't be possible) Invalid guess - uh oh!!");
 	}
+	
+	public String toString(){
+		
+		return this.murderer.GetName()+ this.wep.GetName();
+	}
 }

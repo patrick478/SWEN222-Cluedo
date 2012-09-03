@@ -147,10 +147,10 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 		diceHolder1.repaint();
 		diceHolder2.repaint();
 	}
-	
+
 	private void showNotebook()
 	{
-		
+
 	}
 
 
@@ -181,7 +181,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 		gameShowCards.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				showCards(currentPlayer);
-				}
+			}
 
 		});
 		gameShowNotebook = new JMenuItem("Show Notebook");
@@ -212,13 +212,13 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 		cardsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				showCards(currentPlayer);
-				}
+			}
 
 		});
 		checklistButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				showNotebook(currentPlayer);
-				}
+			}
 
 		});
 		controls = new JPanel();
@@ -410,9 +410,41 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 
 	@Override
 	public Guess GetGuess(Player p) {
-		Guess newGuess = new Guess();
-		newGuess.room = null;
+		String[] charactersToShow = new String[Character.characters.length];
+		int i = 0;
+		for(Character c :  Character.characters){
+			charactersToShow[i] = c.GetName();
+			i++;
 
+		}
+		String[] weaponsToShow = new String[Weapon.weapons.length];
+		i = 0;
+		for(Weapon w :  Weapon.weapons){
+			weaponsToShow[i] = w.GetName();
+			i++;
+		}
+
+
+		Room room = null;
+		String character = (String) JOptionPane.showInputDialog(null, "Please select a character you wish to guess is the murderer", "GUESS: Murderer Selection", JOptionPane.PLAIN_MESSAGE, null,charactersToShow, charactersToShow[0]);
+		String weapon = (String)JOptionPane.showInputDialog(null, "Please select a weapon you wish to guess is the murder weapon", "GUESS: Weapon Selection", JOptionPane.PLAIN_MESSAGE, null, weaponsToShow, weaponsToShow[0]);
+		
+		Character murderer = null;
+		Weapon murderWeap = null;
+		for(Character c :  Character.characters)
+			if(character.equals(c.GetName()))
+				murderer = c;
+				
+		for(Weapon w :  Weapon.weapons)
+			if(weapon.equals(w.GetName()))
+				murderWeap = w;	
+		
+
+		System.out.println(murderer.GetName());
+		System.out.println(murderWeap.GetName());
+		
+		Guess newGuess = new Guess(room, murderer, murderWeap);
+		//System.out.println(newGuess.toString());
 		return newGuess;
 	}
 
@@ -524,13 +556,13 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 				cardFrame.dispose();
 			}
 		});
-		
+
 		cardFrame.add(close);
 		cardFrame.pack();
 		cardFrame.setLocationRelativeTo(frame);
 		cardFrame.setVisible(true);
 	}
-	
+
 	public void showNotebook(Player p){
 
 		final JFrame checklistFrame = new JFrame("Cards being held by player:" + p.GetCharacter());
@@ -545,7 +577,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 				checklistFrame.dispose();
 			}
 		});
-		
+
 		checklistFrame.add(close);
 		checklistFrame.pack();
 		checklistFrame.setLocationRelativeTo(frame);
