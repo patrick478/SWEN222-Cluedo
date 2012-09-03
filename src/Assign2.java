@@ -9,8 +9,6 @@ public class Assign2 {
 		GUI ui = new GUI();
 		
 		int numPlayers = ui.GetNumPlayers();
-		
-		
 		Game cluedo = new Game(numPlayers, ui);
 		
 		try 
