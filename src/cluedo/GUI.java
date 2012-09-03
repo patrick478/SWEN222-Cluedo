@@ -497,8 +497,13 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 
 	public void showCards(Player p){
 		JFrame cardFrame = new JFrame();
-		ArrayList cards =  p.getCards();
-		for(GameObject)
+		cardFrame.setLayout(new GridLayout(0,1));
+		ArrayList<GameObject> cards =  p.getCards();
+		for(GameObject go: cards){
+			cardFrame.add(new JLabel(go.GetName()));
+		}
+		JButton close = new JButton("Close");
+		
 
 	}
 	

@@ -12,12 +12,16 @@ public class Player {
 	public Guess myGuess = null;
 	public CountDownLatch waitLatch = new CountDownLatch(1);
 	
-	List<GameObject> cards = new ArrayList<GameObject>();
+	ArrayList<GameObject> cards = new ArrayList<GameObject>();
 	
 	public Character GetCharacter() {
 		return this.playerChar;
 	}
 	
+	public ArrayList<GameObject> getCards() {
+		return cards;
+	}
+
 	public void SetPosition(int x, int y)
 	{
 		this.playerChar.X = x;
