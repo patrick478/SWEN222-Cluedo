@@ -1,13 +1,6 @@
 package cluedo;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.HeadlessException;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -24,41 +17,39 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSplitPane;
+import javax.swing.*;
 
 
 public class GUI extends JFrame implements CluedoUI {
 
 
-	private static JFrame frame;
-	private static BufferedImage boardImage;	
-	private static JComponent board;
-	private static JPanel controls; 
-	private static JPanel diceControl; 
-	private static JLabel diceHolder1 = new JLabel();
-	private static JLabel diceHolder2= new JLabel();
-	private static JMenu jMenu1;
-	private static JMenu jMenu2;
-	private static JMenuBar jMenuBar1;
 
+	private JFrame frame;
+	private JComponent board;
+	private JPanel controls; 
+	private JPanel diceControl; 
+	private JLabel diceHolder1 = new JLabel();
+	private JLabel diceHolder2= new JLabel();
+	private JMenu jMenu1;
+	private JMenu jMenu2;
+	private JMenuBar jMenuBar1;
+	private GUICanvas canvas;
 
+	private ImageIcon dice1 = makeImageIcon("src/resources/dice1.jpg");
+	private ImageIcon dice2 = makeImageIcon("src/resources/dice2.jpg");
+	private ImageIcon dice3 = makeImageIcon("src/resources/dice3.jpg");
+	private ImageIcon dice4 = makeImageIcon("src/resources/dice4.jpg");
+	private ImageIcon dice5 = makeImageIcon("src/resources/dice5.jpg");
+	private ImageIcon dice6 = makeImageIcon("src/resources/dice6.jpg");
 
-	private static ImageIcon dice1 = makeImageIcon("src/resources/dice1.jpg");
-	private static ImageIcon dice2 = makeImageIcon("src/resources/dice2.jpg");
-	private static ImageIcon dice3 = makeImageIcon("src/resources/dice3.jpg");
-	private static ImageIcon dice4 = makeImageIcon("src/resources/dice4.jpg");
-	private static ImageIcon dice5 = makeImageIcon("src/resources/dice5.jpg");
-	private static ImageIcon dice6 = makeImageIcon("src/resources/dice6.jpg");
-
-	private static JButton rollDice = new JButton("Roll Dice");
-
-
+	private JButton rollDice = new JButton("Roll Dice");
 
 	public GUI()  {
 		setupFrame();
 	}
-
-
-	private static ImageIcon makeImageIcon(String filename) {		
+	
+	private ImageIcon makeImageIcon(String filename)
+	{		
 		// using the URL means the image loads when stored
 		// in a jar or expanded into individual files.
 		java.net.URL imageURL = GUI.class.getResource(filename);
@@ -70,30 +61,32 @@ public class GUI extends JFrame implements CluedoUI {
 		return icon;
 	}	
 
-	public static void setDice(int first, int second){
-		switch(first){
-		case 1: diceHolder1.setIcon(dice1);
-		case 2: diceHolder1.setIcon(dice2);
-		case 3: diceHolder1.setIcon(dice3);
-		case 4: diceHolder1.setIcon(dice4);
-		case 5: diceHolder1.setIcon(dice5);;
-		default: diceHolder1.setIcon(dice6);
-
+	public void setDice(int first, int second)
+	{
+		switch(first)
+		{
+			case 1: diceHolder1.setIcon(dice1);
+			case 2: diceHolder1.setIcon(dice2);
+			case 3: diceHolder1.setIcon(dice3);
+			case 4: diceHolder1.setIcon(dice4);
+			case 5: diceHolder1.setIcon(dice5);;
+			default: diceHolder1.setIcon(dice6);
+			
 		}
-		switch(second){
-		case 1: diceHolder2.setIcon(dice1);
-		case 2: diceHolder2.setIcon(dice2);
-		case 3: diceHolder2.setIcon(dice3);
-		case 4: diceHolder2.setIcon(dice4);
-		case 5: diceHolder2.setIcon(dice5);;
-		default: diceHolder2.setIcon(dice6);
-
-
+		
+		switch(second)
+		{
+			case 1: diceHolder2.setIcon(dice1);
+			case 2: diceHolder2.setIcon(dice2);
+			case 3: diceHolder2.setIcon(dice3);
+			case 4: diceHolder2.setIcon(dice4);
+			case 5: diceHolder2.setIcon(dice5);
+			default: diceHolder2.setIcon(dice6);		
 		}
 	}
 
 
-	public static void setupFrame(){
+	public void setupFrame(){
 		frame = new JFrame();
 		jMenuBar1 = new javax.swing.JMenuBar();
 		jMenu1 = new javax.swing.JMenu();
@@ -106,27 +99,13 @@ public class GUI extends JFrame implements CluedoUI {
 		jMenuBar1.add(jMenu2);
 
 		frame.setJMenuBar(jMenuBar1);
-
-
-		try {
-			boardImage = ImageIO.read(new File("src/resources/board.jpg"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
+		
+		canvas = new GUICanvas();
+		
+		frame.add(canvas);
 
 		frame.setPreferredSize(new Dimension(715,950));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-
-		board = new JComponent(){
-			protected void paintComponent(Graphics g){
-				g.drawImage(boardImage, 0, 0,frame.getWidth(),frame.getWidth(), null);}
-		};	
-
 
 		controls = new JPanel();
 		controls.setLayout(new BorderLayout());
@@ -272,13 +251,4 @@ public class GUI extends JFrame implements CluedoUI {
 		// TODO Auto-generated method stub
 
 	}	
-
-
-
-
-
-
-
-
-
 }
