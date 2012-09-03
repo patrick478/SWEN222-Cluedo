@@ -88,16 +88,16 @@ public class GUI extends JFrame implements CluedoUI {
 
 		frame.setJMenuBar(jMenuBar1);
 		
-		canvas = new GUICanvas();
-		
-		frame.add(canvas);
-
-		frame.setPreferredSize(new Dimension(715,950));
+		frame.setPreferredSize(new Dimension(600,750));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		controls = new JPanel();
+			
+		canvas = new GUICanvas();
 		controls.setLayout(new BorderLayout());
 
+		canvas.setSize(600, 600);
+		controls.add(canvas, BorderLayout.CENTER);
 
 
 		diceControl = new JPanel();
@@ -109,15 +109,9 @@ public class GUI extends JFrame implements CluedoUI {
 		diceControl.add(diceHolder1);
 		diceControl.add(diceHolder2);
 
+		controls.add(diceControl,BorderLayout.SOUTH);
 
-
-		controls.add(diceControl,BorderLayout.WEST);
-
-
-		JSplitPane splitPane = new JSplitPane(0,true, board, controls);
-		splitPane.setDividerLocation(715);
-
-		frame.add(splitPane, BorderLayout.CENTER);
+		frame.add(controls);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
