@@ -72,6 +72,14 @@ public class GUICanvas extends Canvas{
 				targetColour = scarletColor;
 			else if(c == Character.characters[1])
 				targetColour = mustardColor;
+			else if(c == Character.characters[2])
+				targetColour = whiteColor;
+			else if(c == Character.characters[3])
+				targetColour = greenColor;
+			else if(c == Character.characters[4])
+				targetColour = peacockColor;
+			else if(c == Character.characters[5])
+				targetColour = plumColor;
 			
 			g.setColor(targetColour);
 			g.fillOval(GUI.getCoordFromBoardX(c.X) + 2, GUI.getCoordFromBoardY(c.Y) + 2, (int)(GUI.xSize - 3), (int)(GUI.ySize - 3));
