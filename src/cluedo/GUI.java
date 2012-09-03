@@ -181,8 +181,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 		gameShowCards.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				showCards(currentPlayer);
-				System.out.println("Showing cards");
-			}
+				}
 
 		});
 		gameShowNotebook = new JMenuItem("Show Notebook");
@@ -210,7 +209,18 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 		frame.setPreferredSize(new Dimension(516,670));
 		frame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(this);
+		cardsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				showCards(currentPlayer);
+				}
 
+		});
+		checklistButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				showNotebook(currentPlayer);
+				}
+
+		});
 		controls = new JPanel();
 
 		controls.setLayout(new BorderLayout());
@@ -502,7 +512,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 
 
 	public void showCards(Player p){
-		final JFrame cardFrame = new JFrame();
+		final JFrame cardFrame = new JFrame("Cards being held by player:" + p.GetCharacter());
 		cardFrame.setLayout(new GridLayout(0,1));
 		ArrayList<GameObject> cards =  p.getCards();
 		for(GameObject go: cards){
@@ -516,12 +526,30 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 		});
 		
 		cardFrame.add(close);
-
+		cardFrame.pack();
+		cardFrame.setLocationRelativeTo(frame);
+		cardFrame.setVisible(true);
 	}
 	
 	public void showNotebook(Player p){
 
-
+		final JFrame checklistFrame = new JFrame("Cards being held by player:" + p.GetCharacter());
+		checklistFrame.setLayout(new GridLayout(0,1));
+		ArrayList<GameObject> cards =  p.getChecklist();
+		for(GameObject go: cards){
+			checklistFrame.add(new JLabel(go.GetName()));
+		}
+		JButton close = new JButton("Close");
+		close.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event) {
+				checklistFrame.dispose();
+			}
+		});
+		
+		checklistFrame.add(close);
+		checklistFrame.pack();
+		checklistFrame.setLocationRelativeTo(frame);
+		checklistFrame.setVisible(true);
 
 	}
 

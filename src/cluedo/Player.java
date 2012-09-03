@@ -22,6 +22,9 @@ public class Player {
 	public ArrayList<GameObject> getCards() {
 		return cards;
 	}
+	public ArrayList<GameObject> getChecklist() {
+		return checklist;
+	}
 
 	public void SetPosition(int x, int y)
 	{
