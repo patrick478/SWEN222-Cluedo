@@ -16,6 +16,8 @@ public class GUICanvas extends Canvas{
 	Color peacockColor;
 	Color plumColor;
 	
+	private boolean drawGrid = false;
+	
 	public GUICanvas()
 	{
 		this.boardImage = makeImage("src/resources/board.jpg");
@@ -31,12 +33,16 @@ public class GUICanvas extends Canvas{
 	public void paint(Graphics g)
 	{
 		g.drawImage(this.boardImage, 0, 0, null);
-		for(int x = 0; x < 24; x++)
+		
+		if(this.drawGrid)
 		{
-			for(int y = 0; y < 29; y++)
+			for(int x = 0; x < 24; x++)
 			{
-				g.setColor(Color.RED);
-				g.drawRect((int)((x * GUI.xSize) + GUI.xOffset),(int)((y * GUI.ySize) + GUI.yOffset), (int)GUI.xSize, (int)GUI.ySize);
+				for(int y = 0; y < 29; y++)
+				{
+					g.setColor(Color.RED);
+					g.drawRect((int)((x * GUI.xSize) + GUI.xOffset),(int)((y * GUI.ySize) + GUI.yOffset), (int)GUI.xSize, (int)GUI.ySize);
+				}
 			}
 		}
 		
@@ -60,7 +66,7 @@ public class GUICanvas extends Canvas{
 				targetColour = mustardColor;
 			
 			g.setColor(targetColour);
-			g.fillRect(GUI.getCoordFromBoardX(c.X), GUI.getCoordFromBoardY(c.Y), 16, 16);
+			g.fillOval(GUI.getCoordFromBoardX(c.X) + 2, GUI.getCoordFromBoardY(c.Y) + 2, (int)(GUI.xSize - 3), (int)(GUI.ySize - 3));
 		}
 	}
 	
