@@ -7,8 +7,6 @@ public class Player {
 	private static Random random = new Random();
 	
 	private Character playerChar;
-	private int X;
-	private int Y;
 	
 	List<GameObject> cards = new ArrayList<GameObject>();
 	
@@ -18,13 +16,13 @@ public class Player {
 	
 	public void SetPosition(int x, int y)
 	{
-		this.X = x;
-		this.Y = y;
+		this.playerChar.X = x;
+		this.playerChar.Y = y;
 	}
 	
 	public BoardTile FindOnBoard(Board b)
 	{
-		BoardTile bt = b.boardSpaces[this.X][this.Y];
+		BoardTile bt = b.boardSpaces[this.playerChar.X][this.playerChar.Y];
 		if(bt == null)
 			bt = BoardTile.Empty;
 		
@@ -48,18 +46,19 @@ public class Player {
 		
 		Movement[] movements = this.PlotMovements(b);
 		Movement chosenMovement = ui.PresentMovements(this, movements, diceOne + diceTwo);
+		if(chosenMovement == null) return null;
 		
 		if(chosenMovement.stepsRequired > diceOne + diceTwo)
 		{
 			Pair stepTarget = chosenMovement.steps.get((diceOne + diceTwo - 1));
-			this.X = stepTarget.getFirst();
-			this.Y = stepTarget.getSecond();
+			this.playerChar.X = stepTarget.getFirst();
+			this.playerChar.Y = stepTarget.getSecond();
 			ui.NotifyMoved(chosenMovement.stepsRequired - (diceOne + diceTwo), chosenMovement.finalRoom);
 		}
 		else
 		{
-			this.X = chosenMovement.finalX;
-			this.Y = chosenMovement.finalY;
+			this.playerChar.X = chosenMovement.finalX;
+			this.playerChar.Y = chosenMovement.finalY;
 		}
 		
 		
@@ -102,7 +101,7 @@ public class Player {
 		
 		Queue<PathfindFrame> toTest = new LinkedList<PathfindFrame>();
 		
-		toTest.add(new PathfindFrame(new ArrayList<Pair>(), this.X, this.Y));
+		toTest.add(new PathfindFrame(new ArrayList<Pair>(), this.playerChar.X, this.playerChar.Y));
 		
 		PathfindFrame curFrame = null;
 		while(!toTest.isEmpty())

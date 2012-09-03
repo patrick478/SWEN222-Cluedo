@@ -21,5 +21,7 @@ public interface CluedoUI {
 	public Guess GetAccusation(Player p);
 	public Movement PresentMovements(Player p, Movement[] m, int diceTotal);
 	public void NotifyMoved(int nSteps, Room r);
+	
+	public void Repaint();
 }
 

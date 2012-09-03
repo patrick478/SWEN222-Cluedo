@@ -12,7 +12,10 @@ import javax.swing.*;
 
 public class GUI extends JFrame implements CluedoUI, MouseListener {
 
-
+	public static double xOffset = 12;
+	public static double yOffset = 12;
+	public static double xSize = 16.25;
+	public static double ySize = 16.44;
 
 	private JFrame frame;
 	private JComponent board;
@@ -36,6 +39,34 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 
 	public GUI()  {
 		setupFrame();
+	}
+	
+	public static int getBoardXFromCoord(int xcoord)
+	{
+		double bx = xcoord - GUI.xOffset;
+		bx /= GUI.xSize;
+		return (int)bx;
+	}
+	
+	public static int getBoardYFromCoord(int ycoord)
+	{
+		double by = ycoord - GUI.yOffset;
+		by /= GUI.ySize;
+		return (int)by;
+	}
+	
+	public static int getCoordFromBoardX(int bx)
+	{
+		double cx = bx * GUI.xSize;
+		cx += GUI.xOffset;
+		return (int)cx;
+	}
+	
+	public static int getCoordFromBoardY(int by)
+	{
+		double cy = by * GUI.ySize;
+		cy += GUI.yOffset;
+		return (int)cy;
 	}
 	
 	private ImageIcon makeImageIcon(String filename)
@@ -90,15 +121,16 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 
 		frame.setJMenuBar(jMenuBar1);
 		
-		frame.setPreferredSize(new Dimension(516,750));
+		frame.setPreferredSize(new Dimension(516,650));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		controls = new JPanel();
 			
-		canvas = new GUICanvas();
 		controls.setLayout(new BorderLayout());
 		
-		canvas.setSize(500, 600);
+		canvas = new GUICanvas();
+		canvas.addMouseListener(this);
+		canvas.setSize(500, 500);
 		controls.add(canvas, BorderLayout.CENTER);
 
 
@@ -136,6 +168,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 		catch(NumberFormatException nfe)
 		{
 			JOptionPane.showMessageDialog(null,  "Please select the number of players");
+			return GetNumPlayers();
 		}
 		return numPlayers;
 	}
@@ -245,7 +278,6 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 
 	@Override
 	public Movement PresentMovements(Player p, Movement[] m, int diceTotal) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -257,9 +289,8 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void mouseClicked(MouseEvent me) {
+		System.out.printf("You clicked at: %d, %d\n", this.getBoardXFromCoord(me.getX()), this.getBoardYFromCoord(me.getY()));
 	}
 
 	@Override
@@ -284,5 +315,10 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void Repaint() {
+		canvas.repaint();
 	}	
 }

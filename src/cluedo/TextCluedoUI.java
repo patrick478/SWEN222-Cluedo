@@ -266,4 +266,8 @@ public class TextCluedoUI implements CluedoUI {
 		System.out.printf("You're now %d steps away", nSteps);
 		
 	}
+
+	@Override
+	public void Repaint() {
+	}
 }

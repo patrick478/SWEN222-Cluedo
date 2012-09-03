@@ -9,6 +9,7 @@ public class Game {
 	private boolean running = false;
 	
 	private CluedoUI uiVendor = null;
+	public List<Player> players = new ArrayList<Player>();
 	
 	public Game(int nPlayers, CluedoUI ui)
 	{
@@ -39,15 +40,15 @@ public class Game {
 		// Debug
 		//b.PrintBoard();
 		
-		
-		List<Player> players = new ArrayList<Player>();
 		for(int i = 0; i < this.nPlayers; i++) 
 		{			
 			Player newPlayer = new Player();
 			newPlayer.SetCharacter(this.uiVendor.ChooseCharacter(i+1));
 			newPlayer.SetPosition(newPlayer.GetCharacter().startPosX, newPlayer.GetCharacter().startPosY);
+			System.out.printf("startPosX: %d\n", newPlayer.GetCharacter().startPosX);
 			players.add(newPlayer);
 		}
+		this.uiVendor.Repaint();
 		
 		List<GameObject> available = new ArrayList<GameObject>();
 		available.addAll(Arrays.asList(Character.characters));

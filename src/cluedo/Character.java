@@ -7,6 +7,8 @@ public class Character extends GameObject {
 	int startPosX = -1;
 	int startPosY = -1;
 	public boolean isChosen;
+	public int X;
+	public int Y;
 	
 	public Character(String n, int x, int y) {
 		this.SetName(n);
