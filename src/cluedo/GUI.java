@@ -23,7 +23,6 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 	public static double ySize = 16.44;
 
 	private JFrame frame;
-	private JComponent board;
 	private JPanel controls; 
 	private JPanel diceControl; 
 	private JLabel diceHolder1 = new JLabel();
