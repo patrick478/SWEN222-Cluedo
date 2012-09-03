@@ -32,6 +32,14 @@ public class GUICanvas extends Canvas{
 	
 	public void paint(Graphics g)
 	{
+      Graphics2D g2d = (Graphics2D)g;
+      // for antialising geometric shapes
+      g2d.addRenderingHints( new RenderingHints( RenderingHints.KEY_ANTIALIASING,
+                                                 RenderingHints.VALUE_ANTIALIAS_ON ));
+      // for antialiasing text
+      g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
+                            RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
+		   
 		g.drawImage(this.boardImage, 0, 0, null);
 		
 		if(this.drawGrid)

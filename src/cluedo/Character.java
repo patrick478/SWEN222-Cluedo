@@ -14,6 +14,8 @@ public class Character extends GameObject {
 		this.SetName(n);
 		this.startPosX = x;
 		this.startPosY = y;
+		this.X = this.startPosX;
+		this.Y = this.startPosY;
 	}  
 
 	public static final Character[] characters = new Character[] {
