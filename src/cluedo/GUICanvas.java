@@ -113,6 +113,7 @@ public class GUICanvas extends Canvas{
 				targetColour = plumColor;
 			
 			g.setColor(targetColour);
+
 			g.fillOval(GUI.getCoordFromBoardX(c.X) + 2, GUI.getCoordFromBoardY(c.Y) + 2, (int)(GUI.xSize - 4), (int)(GUI.ySize - 4));
 			g.setColor(Color.BLACK);
 			g.drawOval(GUI.getCoordFromBoardX(c.X) + 2, GUI.getCoordFromBoardY(c.Y) + 2, (int)(GUI.xSize - 4), (int)(GUI.ySize - 4));
