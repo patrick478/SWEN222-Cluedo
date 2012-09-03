@@ -18,6 +18,18 @@ public class GUICanvas extends Canvas{
 	public void paint(Graphics g)
 	{
 		g.drawImage(this.boardImage, 0, 0, null);
+		double xOffset = 14.5;
+		double yOffset = 14.5;
+		double xSize = 19.5;
+		double ySize = 19.75;
+		for(int x = 0; x < 24; x++)
+		{
+			for(int y = 0; y < 29; y++)
+			{
+				g.setColor(Color.RED);
+				g.drawRect((int)((x * xSize) + xOffset),(int)((y * ySize) + yOffset), (int)xSize, (int)ySize);
+			}
+		}
 	}
 	
 	private BufferedImage makeImage(String filename)

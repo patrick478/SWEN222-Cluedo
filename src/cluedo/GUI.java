@@ -101,7 +101,7 @@ public class GUI extends JFrame implements CluedoUI {
 
 
 		diceControl = new JPanel();
-		diceControl.setLayout(new GridLayout(0,1));
+		diceControl.setLayout(new GridLayout(1, 2));
 		diceControl.add(rollDice);
 
 		setDice(1,1);
