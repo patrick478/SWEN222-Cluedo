@@ -19,11 +19,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 
-public class GUI extends JFrame {
+public class GUI extends JFrame implements CluedoUI {
 
 
 	private static JFrame frame;
@@ -59,19 +60,13 @@ public class GUI extends JFrame {
 		// using the URL means the image loads when stored
 		// in a jar or expanded into individual files.
 		java.net.URL imageURL = GUI.class.getResource(filename);
-
+		
 		ImageIcon icon = null;
 		if (imageURL != null) {
 			icon = new ImageIcon(imageURL);
 		}
 		return icon;
-	}
-
-
-	public static void main(String[] args){
-		setupFrame();
-	}
-	
+	}	
 	
 	public static void setDice(int first, int second){
 		switch(first){
@@ -159,6 +154,93 @@ public class GUI extends JFrame {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+	}
+
+
+	@Override
+	public int GetNumPlayers() {
+		Object[] options = {"3", "4", "5", "6"};
+		String reply = (String)JOptionPane.showInputDialog(null, "How many players?", "Number of players", JOptionPane.PLAIN_MESSAGE, null, options, "ham");
+		int numPlayers = 0;
+		try
+		{
+			numPlayers = Integer.parseInt(reply);
+		}
+		catch(NumberFormatException nfe)
+		{
+			JOptionPane.showMessageDialog(null,  "Please select the number of players");
+		}
+		return numPlayers;
+	}
+
+
+	@Override
+	public void DisplayMessage(CluedoMessage msg, Object... args) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public Character ChooseCharacter(int playerIndex) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void SetTurn(int playerIndex, Player p, Board b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void SetPosition(BoardTile bt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void SetRoll(int d1, int d2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void WaitAction(String msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public Guess GetGuess(Player p) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Guess GetAccusation(Player p) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Movement PresentMovements(Player p, Movement[] m, int diceTotal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void NotifyMoved(int nSteps, Room r) {
+		// TODO Auto-generated method stub
+		
 	}	
 
 
