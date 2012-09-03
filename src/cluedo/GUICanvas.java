@@ -18,7 +18,7 @@ public class GUICanvas extends Canvas{
 	
 	private boolean drawGrid = false;
 	
-	public GUICanvas()
+	public GUICanvas(GUI ui)
 	{
 		this.boardImage = makeImage("src/resources/board.jpg");
 		this.scarletColor = Color.RED;
@@ -82,9 +82,9 @@ public class GUICanvas extends Canvas{
 				targetColour = plumColor;
 			
 			g.setColor(targetColour);
-			g.fillOval(GUI.getCoordFromBoardX(c.X) + 2, GUI.getCoordFromBoardY(c.Y) + 2, (int)(GUI.xSize - 3), (int)(GUI.ySize - 3));
+			g.fillOval(GUI.getCoordFromBoardX(c.X) + 2, GUI.getCoordFromBoardY(c.Y) + 2, (int)(GUI.xSize - 4), (int)(GUI.ySize - 4));
 			g.setColor(Color.BLACK);
-			g.drawOval(GUI.getCoordFromBoardX(c.X) + 2, GUI.getCoordFromBoardY(c.Y) + 2, (int)(GUI.xSize - 3), (int)(GUI.ySize - 3));
+			g.drawOval(GUI.getCoordFromBoardX(c.X) + 2, GUI.getCoordFromBoardY(c.Y) + 2, (int)(GUI.xSize - 4), (int)(GUI.ySize - 4));
 		}
 	}
 	
