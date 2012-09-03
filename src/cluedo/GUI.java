@@ -95,7 +95,7 @@ public class GUI extends JFrame implements CluedoUI {
 			
 		canvas = new GUICanvas();
 		controls.setLayout(new BorderLayout());
-
+		
 		canvas.setSize(600, 600);
 		controls.add(canvas, BorderLayout.CENTER);
 
@@ -151,7 +151,6 @@ public class GUI extends JFrame implements CluedoUI {
 				JOptionPane.showMessageDialog(null,  "Found the "+((GameObject)args[0]).GetName()+" card!\n");
 				break;
 			case NoCards:
-				System.out.printf("Looks like no one has that card. Hmm..\n");
 				JOptionPane.showMessageDialog(null,  "Looks like no one has that card. Hmm...");
 				break;
 			case Winner:
