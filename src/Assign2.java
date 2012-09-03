@@ -7,9 +7,9 @@ public class Assign2 {
 	 */
 	public static void main(String[] args) {
 		GUI ui = new GUI();
+				
 		
-		int numPlayers = ui.GetNumPlayers();
-		Game cluedo = new Game(numPlayers, ui);
+		Game cluedo = new Game(0, ui);
 		
 		try 
 		{

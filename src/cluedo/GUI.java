@@ -5,18 +5,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JSplitPane;
 import javax.swing.*;
 
 
@@ -153,7 +141,30 @@ public class GUI extends JFrame implements CluedoUI {
 
 	@Override
 	public void DisplayMessage(CluedoMessage msg, Object... args) {
-		// TODO Auto-generated method stub
+		switch(msg)
+		{
+			case WelcomeMessage:
+				JOptionPane.showMessageDialog(null,  "Welcome to CLUEDO!\nGame designed by Ben Anderson and Patrick Barnes");
+				
+				break;
+			case FoundCard:
+				System.out.printf("Found the %s card!\n", ((GameObject)args[0]).GetName());
+				break;
+			case NoCards:
+				System.out.printf("Looks like no one has that card. Hmm..\n");
+				break;
+			case Winner:
+				System.out.println("================================================");
+				System.out.printf("The winner is [Player %d]: %s\n", args[0], ((GameObject)args[1]).GetName());
+				System.out.println("================================================");
+				break;
+				
+			case Loser:
+				System.out.println("================================================");
+				System.out.printf("The loser is [Player %d]: %s\n", args[0], ((GameObject)args[1]).GetName());
+				System.out.println("================================================");
+				break;	
+		}
 
 	}
 
