@@ -50,7 +50,8 @@ public class Player {
 		//b.PrintBoard();
 		
 		Movement[] movements = this.PlotMovements(b);
-		ui.PresentMovements(this, movements, diceOne + diceTwo);
+		int[][] moveables = this.PlotMoveables(b, diceOne + diceTwo);
+		ui.PresentMovements(this, movements, moveables, diceOne + diceTwo);
 	}
 		
 	public void CompleteTurn(int x, int y, CluedoUI ui)
@@ -107,6 +108,74 @@ public class Player {
 		}
 		
 		this.myGuess = newGuess;
+		
+		this.waitLatch.countDown();
+	}
+	
+	public int[][] PlotMoveables(Board b, int roll)
+	{
+		Queue<PathfindFrame> toTest = new LinkedList<PathfindFrame>();
+		toTest.add(new PathfindFrame(new ArrayList<Pair>(), this.playerChar.X, this.playerChar.Y));
+		
+		int[][] moveable = new int[Board.Width][Board.Height];
+		boolean[] tested = new boolean[Board.Width * Board.Height];
+		
+		PathfindFrame curFrame = null;
+		while(!toTest.isEmpty())
+		{
+			curFrame = toTest.remove();
+			
+			if(curFrame.curPosX >= Board.Width || curFrame.curPosY >= Board.Height) continue; 
+			if(tested[(curFrame.curPosY * Board.Width) + curFrame.curPosX]) continue;
+			tested[(curFrame.curPosY * Board.Width) + curFrame.curPosX] = true;
+			
+			System.out.printf("Examining %d, %d. numSteps=%d. curRoll=%d\n", curFrame.curPosX, curFrame.curPosY, curFrame.numSteps, roll);
+			if(curFrame.numSteps >= roll) continue;
+			else
+			{
+				PathfindFrame leftFrame = new PathfindFrame(curFrame.steps, curFrame.curPosX-1, curFrame.curPosY);
+				PathfindFrame rightFrame = new PathfindFrame(curFrame.steps, curFrame.curPosX+1, curFrame.curPosY);
+				PathfindFrame upFrame = new PathfindFrame(curFrame.steps, curFrame.curPosX, curFrame.curPosY-1);
+				PathfindFrame downFrame = new PathfindFrame(curFrame.steps, curFrame.curPosX, curFrame.curPosY+1);
+				leftFrame.numSteps = curFrame.numSteps + 1;
+				rightFrame.numSteps= curFrame.numSteps + 1;
+				upFrame.numSteps= curFrame.numSteps + 1;
+				downFrame.numSteps= curFrame.numSteps + 1;
+				
+				int left = (curFrame.curPosY * Board.Width) + curFrame.curPosX-1;
+				int right = (curFrame.curPosY * Board.Width) + curFrame.curPosX+1;
+				int up = ((curFrame.curPosY-1) * Board.Width) + curFrame.curPosX;
+				int down = ((curFrame.curPosY+1) * Board.Width) + curFrame.curPosX;
+				
+				if(curFrame.curPosX > 0 && left > 0 && !tested[left])
+					toTest.add(leftFrame);
+				if(curFrame.curPosX < Board.Width && right > 0 && right < tested.length && !tested[right])
+					toTest.add(rightFrame);
+				if(curFrame.curPosY > 0 && up > 0 && !tested[up])
+					toTest.add(upFrame);
+				if(curFrame.curPosY < Board.Height && down > 0 && down < tested.length && !tested[down])
+					toTest.add(downFrame);
+				
+				moveable[curFrame.curPosX][curFrame.curPosY] = 1;
+
+				if(b.boardSpaces[curFrame.curPosX][curFrame.curPosY] instanceof Door)
+				{
+					System.out.println("Is a room!");
+					BoardTile bt = b.boardSpaces[curFrame.curPosX][curFrame.curPosY];
+					for(int x = 0; x < Board.Width; x++)
+						for(int y = 0; y < Board.Height; y++)
+							if(b.boardSpaces[x][y] != null && b.boardSpaces[x][y].equals(((Door)bt).linkedRoom))
+								moveable[x][y] = 2;
+				}
+				else if(b.boardSpaces[curFrame.curPosX][curFrame.curPosY] instanceof Room)
+				{
+					if(moveable[curFrame.curPosX][curFrame.curPosY] < 2)
+						moveable[curFrame.curPosX][curFrame.curPosY] = 0;
+				}
+			}
+		}
+		
+		return moveable;
 	}
 	
 	public Movement[] PlotMovements(Board board)

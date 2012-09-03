@@ -58,28 +58,18 @@ public class GUICanvas extends Canvas{
 		}
 		
 		if(ui.chooseMovementsMode)
-		{
-			boolean[][] moveable = new boolean[Board.Width][Board.Height];
-			for(Movement m : ui.movements)
-			{
-				int c = 0;
-				for(Pair p : m.steps)
-				{
-					moveable[p.getFirst()][p.getSecond()] = true;
-					c++;
-					if(c > ui.roll) break;
-				}
-			}
-			
+		{			
 			for(int x = 0; x < 24; x++)
 			{
 				for(int y = 0; y < 29; y++)
 				{
-					if(moveable[x][y])
-					{
-						g.setColor(new Color(0, 255, 0, 70));
-						g.fillRect((int)((x * GUI.xSize) + GUI.xOffset),(int)((y * GUI.ySize) + GUI.yOffset), (int)GUI.xSize, (int)GUI.ySize);
-					}
+					if(ui.moveables[x][y] == 1)
+						g.setColor(new Color(0, 255, 0, 60));
+					else if(ui.moveables[x][y] == 2)
+						g.setColor(new Color(0, 0, 255, 80));
+					else continue;
+					
+					g.fillRect((int)Math.ceil((x * GUI.xSize) + GUI.xOffset),(int)Math.ceil((y * GUI.ySize) + GUI.yOffset), (int)Math.ceil(GUI.xSize), (int)Math.ceil(GUI.ySize));
 				}
 			}
 		}

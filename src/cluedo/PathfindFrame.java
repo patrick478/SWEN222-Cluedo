@@ -7,6 +7,7 @@ public class PathfindFrame {
 	
 	int curPosX;
 	int curPosY;
+	int numSteps = 0;
 	
 	public PathfindFrame(List<Pair> s, int x, int y)
 	{
