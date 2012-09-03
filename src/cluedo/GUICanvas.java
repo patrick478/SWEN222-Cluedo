@@ -21,11 +21,11 @@ public class GUICanvas extends Canvas{
 	public GUICanvas(GUI ui)
 	{
 		this.boardImage = makeImage("src/resources/board.jpg");
-		this.scarletColor = Color.RED;
-		this.mustardColor = Color.YELLOW;
+		this.scarletColor = new Color(255, 36, 0);
+		this.mustardColor = new Color(255, 128, 0);
 		this.whiteColor = Color.WHITE;
-		this.greenColor = Color.GREEN;
-		this.peacockColor = new Color(128, 0, 128);
+		this.greenColor = new Color(0, 128, 0);
+		this.peacockColor = new Color(0, 0, 255);
 		this.plumColor = new Color(142, 69, 133);
 		
 	}

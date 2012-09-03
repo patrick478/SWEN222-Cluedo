@@ -23,8 +23,8 @@ public class Character extends GameObject {
 		new Character("Jack Mustard", 7, 28),
 		new Character("Diane White", 0, 19), 
 		new Character("Jacob Green", 0, 9), 
-		new Character("Eleanor Peacock", 20, 0), 
-		new Character("Victor Plum", 6, 0)
+		new Character("Eleanor Peacock", 6, 0), 
+		new Character("Victor Plum", 20, 0)
 	};
 	
 	public static Character getRandom()
