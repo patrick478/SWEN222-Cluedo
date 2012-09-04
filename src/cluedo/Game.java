@@ -84,6 +84,9 @@ public class Game {
 				
 				Guess g = players.get(i).myGuess;
 				if(g == null) continue;
+				
+				
+				
 				if(g.isAccusation)
 				{
 					if(g.wep == murderWeapon && g.room == murderRoom && g.murderer == murderCharacter)
@@ -103,6 +106,30 @@ public class Game {
 				}
 				else
 				{
+					int xTarget = -1;
+					int yTarget = -1;
+					for(int x = 0; x < Board.Width; x++)
+					{
+						for(int y = 0; y < Board.Height; y++)
+						{
+							if(b.boardSpaces[x][y] != null && b.boardSpaces[x][y].equals(g.room))
+							{
+								xTarget = x;
+								yTarget = y;
+								x = Board.Width;
+								break;
+							}
+						}
+					}
+					
+					for(int p = 0; p < Character.characters.length; p++)
+						if(Character.characters[p].equals(g.murderer))
+						{
+							Character.characters[p].X = xTarget;
+							Character.characters[p].Y = yTarget;
+						}
+					
+					
 					GameObject givenCard = null;
 					for(int j = 0; j < this.nPlayers; j++)
 					{
