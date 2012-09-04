@@ -23,6 +23,10 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	private JPanel diceControl; 
 	private JLabel diceHolder1 = new JLabel();
 	private JLabel diceHolder2= new JLabel();
+	
+	private JPanel turnControl;
+	private JLabel turnText;
+	
 	private JMenu jMenu1;
 	private JMenu jMenu2;
 	private JMenuBar jMenuBar1;
@@ -35,7 +39,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	private ImageIcon dice5 = makeImageIcon("src/resources/dice5.jpg");
 	private ImageIcon dice6 = makeImageIcon("src/resources/dice6.jpg");
 
-	private JButton rollDice = new JButton("Roll Dice");
+	private JLabel rollDice = new JLabel("  You rolled:");
 	
 	public boolean chooseMovementsMode = false;
 	public Movement[] movements = null;
@@ -85,23 +89,50 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	{
 		switch(first)
 		{
-			case 1: diceHolder1.setIcon(dice1);
-			case 2: diceHolder1.setIcon(dice2);
-			case 3: diceHolder1.setIcon(dice3);
-			case 4: diceHolder1.setIcon(dice4);
-			case 5: diceHolder1.setIcon(dice5);
-			default: diceHolder1.setIcon(dice6);	
+			case 1: 
+				diceHolder1.setIcon(dice1);
+				break;
+			case 2: 
+				diceHolder1.setIcon(dice2);
+				break;
+			case 3: 
+				diceHolder1.setIcon(dice3);
+				break;
+			case 4: 
+				diceHolder1.setIcon(dice4);
+				break;
+			case 5: 
+				diceHolder1.setIcon(dice5);
+				break;
+			case 6: 
+			default:
+				diceHolder1.setIcon(dice6);
+				break;
 			
 		}
 		
 		switch(second)
 		{
-			case 1: diceHolder2.setIcon(dice1);
-			case 2: diceHolder2.setIcon(dice2);
-			case 3: diceHolder2.setIcon(dice3);
-			case 4: diceHolder2.setIcon(dice4);
-			case 5: diceHolder2.setIcon(dice5);
-			default: diceHolder2.setIcon(dice6);		
+			case 1: 
+				diceHolder2.setIcon(dice1);
+				break;
+			case 2: 
+				diceHolder2.setIcon(dice2);
+				break;
+			case 3: 
+				diceHolder2.setIcon(dice3);
+				break;
+			case 4: 
+				diceHolder2.setIcon(dice4);
+				break;
+			case 5: 
+				diceHolder2.setIcon(dice5);
+				break;
+			case 6: 
+			default:
+				diceHolder2.setIcon(dice6);
+				break;
+					
 		}
 		diceHolder1.repaint();
 		diceHolder2.repaint();
@@ -161,7 +192,13 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 		c.insets = new Insets(0,10,0,0);
 		diceControl.add(diceHolder2, c);
 		
+		c.gridx = 2;
+		c.gridy = 0;
+		turnText = new JLabel("It's blahs turn");
+		diceControl.add(turnText, c);
+		
 		controls.add(diceControl, BorderLayout.WEST);
+		
 		frame.add(controls);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -276,15 +313,16 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 
 	@Override
 	public void WaitAction(String msg) {
-		// TODO Auto-generated method stub
-
+		JOptionPane.showMessageDialog(null, msg);
 	}
 
 
 	@Override
 	public Guess GetGuess(Player p) {
-		// TODO Auto-generated method stub
-		return null;
+		Guess newGuess = new Guess();
+		newGuess.room = null;
+
+		return newGuess;
 	}
 
 
@@ -318,6 +356,8 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 		int moveToX = GUI.getBoardXFromCoord(me.getX());
 		int moveToY = GUI.getBoardYFromCoord(me.getY());
 		System.out.printf("You clicked at: %d, %d\n", GUI.getBoardXFromCoord(me.getX()), GUI.getBoardYFromCoord(me.getY()));
+		
+		if(moveables[moveToX][moveToY] == 0) return;
 		
 		if(this.playerSelecting != null)
 		{

@@ -119,6 +119,7 @@ public class Player {
 		
 		int[][] moveable = new int[Board.Width][Board.Height];
 		boolean[] tested = new boolean[Board.Width * Board.Height];
+		List<Room> rooms = new LinkedList<Room>();
 		
 		PathfindFrame curFrame = null;
 		while(!toTest.isEmpty())
@@ -161,17 +162,24 @@ public class Player {
 				if(b.boardSpaces[curFrame.curPosX][curFrame.curPosY] instanceof Door)
 				{
 					System.out.println("Is a room!");
-					BoardTile bt = b.boardSpaces[curFrame.curPosX][curFrame.curPosY];
-					for(int x = 0; x < Board.Width; x++)
-						for(int y = 0; y < Board.Height; y++)
-							if(b.boardSpaces[x][y] != null && b.boardSpaces[x][y].equals(((Door)bt).linkedRoom))
-								moveable[x][y] = 2;
+					moveable[curFrame.curPosX][curFrame.curPosY] = 2;
+					rooms.add(((Door)b.boardSpaces[curFrame.curPosX][curFrame.curPosY]).linkedRoom);
 				}
 				else if(b.boardSpaces[curFrame.curPosX][curFrame.curPosY] instanceof Room)
+					moveable[curFrame.curPosX][curFrame.curPosY] = 0;
+			}
+			
+		}
+		
+		for(int x = 0; x < Board.Width; x++)
+		{
+			for(int y = 0; y < Board.Height; y++)
+			{
+				for(Room r : rooms)
 				{
-					if(moveable[curFrame.curPosX][curFrame.curPosY] < 2)
-						moveable[curFrame.curPosX][curFrame.curPosY] = 0;
-				}
+					if(r.equals(b.boardSpaces[x][y]))
+						moveable[x][y] = 2;
+				}		
 			}
 		}
 		
