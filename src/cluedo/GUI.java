@@ -514,13 +514,10 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 		});
 		
 		cardFrame.add(close);
-
 	}
 	
-	public void showNotebook(Player p){
-
-
-
+	public void showNotebook(Player p)
+	{
 	}
 
 }
