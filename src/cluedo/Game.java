@@ -63,7 +63,8 @@ public class Game {
 		int cPlayer = 0;
 		for(int i = 0; i < available.size(); i++)
 		{
-			players.get(cPlayer++).GiveCard(available.get(i));
+			players.get(cPlayer).GiveCard(available.get(i));
+			players.get(cPlayer++).cards.add(available.get(i));
 			cPlayer %= this.nPlayers;
 		}
 		

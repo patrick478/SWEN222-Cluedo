@@ -147,6 +147,11 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 		diceHolder1.repaint();
 		diceHolder2.repaint();
 	}
+	
+	private void showNotebook()
+	{
+		
+	}
 
 
 	public void setupFrame(){

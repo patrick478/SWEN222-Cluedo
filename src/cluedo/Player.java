@@ -13,6 +13,7 @@ public class Player {
 	public CountDownLatch waitLatch = new CountDownLatch(1);
 	
 	List<GameObject> cards = new ArrayList<GameObject>();
+	List<GameObject> checklist = new ArrayList<GameObject>();
 	
 	public Character GetCharacter() {
 		return this.playerChar;
@@ -130,7 +131,8 @@ public class Player {
 			if(tested[(curFrame.curPosY * Board.Width) + curFrame.curPosX]) continue;
 			tested[(curFrame.curPosY * Board.Width) + curFrame.curPosX] = true;
 			
-			//if(b.boardSpaces[curFrame.curPosX][curFrame.curPosY] instanceof Room)
+			if(b.boardSpaces[curFrame.curPosX][curFrame.curPosY] instanceof Room)
+				continue;
 			//	curFrame.numSteps--;
 			
 			System.out.printf("Examining %d, %d. numSteps=%d. curRoll=%d\n", curFrame.curPosX, curFrame.curPosY, curFrame.numSteps, roll);
@@ -287,7 +289,7 @@ public class Player {
 	
 	public void GiveCard(GameObject card)
 	{
-		cards.add(card);
+		checklist.add(card);
 	}
 
 }
