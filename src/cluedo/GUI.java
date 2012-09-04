@@ -183,14 +183,12 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 				showCards(currentPlayer);
 				System.out.println("Showing cards");
 			}
-
 		});
 		gameShowNotebook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				showNotebook();
+				showNotebook(currentPlayer);
 				System.out.println("Showing notebook");
 			}
-
 		});
 		gameShowNotebook = new JMenuItem("Show Notebook");
 		gameShowNotebook.setToolTipText("Show the notebook, with a record of what cards you have seen so far.");
