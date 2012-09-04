@@ -1,6 +1,9 @@
 package cluedo;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -40,45 +43,45 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	private ImageIcon dice6 = makeImageIcon("src/resources/dice6.jpg");
 
 	private JLabel rollDice = new JLabel("  You rolled:");
-	
 	public boolean chooseMovementsMode = false;
 	public Movement[] movements = null;
 	public int roll = 0;
+	private JMenuItem fileExit;
 	private Player playerSelecting;
 	int[][] moveables;
 
 	public GUI()  {
 		setupFrame();
 	}
-	
+
 	public static int getBoardXFromCoord(int xcoord)
 	{
 		double bx = xcoord - GUI.xOffset;
 		bx /= GUI.xSize;
 		return (int)bx;
 	}
-	
+
 	public static int getBoardYFromCoord(int ycoord)
 	{
 		double by = ycoord - GUI.yOffset;
 		by /= GUI.ySize;
 		return (int)by;
 	}
-	
+
 	public static int getCoordFromBoardX(int bx)
 	{
 		double cx = bx * GUI.xSize;
 		cx += GUI.xOffset;
 		return (int)cx;
 	}
-	
+
 	public static int getCoordFromBoardY(int by)
 	{
 		double cy = by * GUI.ySize;
 		cy += GUI.yOffset;
 		return (int)cy;
 	}
-	
+
 	private ImageIcon makeImageIcon(String filename)
 	{		
 		ImageIcon icon = new ImageIcon(filename);
@@ -108,9 +111,8 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 			default:
 				diceHolder1.setIcon(dice6);
 				break;
-			
 		}
-		
+
 		switch(second)
 		{
 			case 1: 
@@ -132,7 +134,6 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 			default:
 				diceHolder2.setIcon(dice6);
 				break;
-					
 		}
 		diceHolder1.repaint();
 		diceHolder2.repaint();
@@ -146,30 +147,41 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 		jMenu2 = new javax.swing.JMenu();
 
 		jMenu1.setText("File");
+
+		fileExit = new JMenuItem("Exit");
+		fileExit.setToolTipText("Exit application");
+		fileExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				System.exit(0);
+			}
+
+		});
+
+		jMenu1.add(fileExit);
 		jMenuBar1.add(jMenu1);
 
 		jMenu2.setText("Game");
 		jMenuBar1.add(jMenu2);
 
 		frame.setJMenuBar(jMenuBar1);
-		
+
 		frame.setPreferredSize(new Dimension(516,650));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		controls = new JPanel();
-			
+
 		controls.setLayout(new BorderLayout());
-		
+
 		canvas = new GUICanvas(this);
 		canvas.addMouseListener(this);
 		canvas.setSize(500, 500);
 		controls.add(canvas, BorderLayout.NORTH);
 
-		
+
 		diceControl = new JPanel(new GridBagLayout());
 		diceControl.setSize(120, 80);
 		GridBagConstraints c = new GridBagConstraints();
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1;
 		c.weighty = 1;
@@ -185,7 +197,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 		c.gridy = 1;
 		c.gridwidth = 1;
 		diceControl.add(diceHolder1, c);
-		
+
 		c.gridx = 1;
 		c.gridy = 1;
 		c.weightx = 0.5;
@@ -196,7 +208,6 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 		c.gridy = 0;
 		turnText = new JLabel("It's blahs turn");
 		diceControl.add(turnText, c);
-		
 		controls.add(diceControl, BorderLayout.WEST);
 		
 		frame.add(controls);
@@ -232,24 +243,24 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	public void DisplayMessage(CluedoMessage msg, Object... args) {
 		switch(msg)
 		{
-			case WelcomeMessage:
-				JOptionPane.showMessageDialog(null,  "Welcome to CLUEDO!\nGame designed by Ben Anderson and Patrick Barnes");
-				
-				break;
-			case FoundCard:
-				JOptionPane.showMessageDialog(null,  "Found the "+((GameObject)args[0]).GetName()+" card!\n");
-				break;
-			case NoCards:
-				JOptionPane.showMessageDialog(null,  "Looks like no one has that card. Hmm...");
-				break;
-			case Winner:
-				
-				JOptionPane.showMessageDialog(null,  "The winner is [Player "+args[0]+"]: "+((GameObject)args[1]).GetName());
-				break;
-				
-			case Loser:
-				JOptionPane.showMessageDialog(null,  "The loser is [Player "+args[0]+"]: "+((GameObject)args[1]).GetName());
-				break;	
+		case WelcomeMessage:
+			JOptionPane.showMessageDialog(null,  "Welcome to CLUEDO!\nGame designed by Ben Anderson and Patrick Barnes");
+
+			break;
+		case FoundCard:
+			JOptionPane.showMessageDialog(null,  "Found the "+((GameObject)args[0]).GetName()+" card!\n");
+			break;
+		case NoCards:
+			JOptionPane.showMessageDialog(null,  "Looks like no one has that card. Hmm...");
+			break;
+		case Winner:
+
+			JOptionPane.showMessageDialog(null,  "The winner is [Player "+args[0]+"]: "+((GameObject)args[1]).GetName());
+			break;
+
+		case Loser:
+			JOptionPane.showMessageDialog(null,  "The loser is [Player "+args[0]+"]: "+((GameObject)args[1]).GetName());
+			break;	
 		}
 
 	}
@@ -304,10 +315,10 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 
 	@Override
 	public void SetRoll(int d1, int d2) {
-		System.out.printf("Setting dice to %d %d\n", d1, d2);
+		//System.out.printf("Setting dice to %d %d\n", d1, d2);
 		setDice(d1, d2);
-		
-		
+
+
 	}
 
 
@@ -340,7 +351,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 		this.chooseMovementsMode = true;
 		this.roll = diceTotal;
 		this.playerSelecting = p;
-		
+
 		this.Repaint();
 	}
 
@@ -369,29 +380,31 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void Repaint() {
 		canvas.repaint();
-	}	
+	}
+
+
 }
