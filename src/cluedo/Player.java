@@ -130,6 +130,9 @@ public class Player {
 			if(tested[(curFrame.curPosY * Board.Width) + curFrame.curPosX]) continue;
 			tested[(curFrame.curPosY * Board.Width) + curFrame.curPosX] = true;
 			
+			if(b.boardSpaces[curFrame.curPosX][curFrame.curPosY] instanceof Room)
+				curFrame.numSteps--;
+			
 			System.out.printf("Examining %d, %d. numSteps=%d. curRoll=%d\n", curFrame.curPosX, curFrame.curPosY, curFrame.numSteps, roll);
 			if(curFrame.numSteps > roll) continue;
 			else
