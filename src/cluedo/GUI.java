@@ -27,8 +27,12 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	private JLabel diceHolder1 = new JLabel();
 	private JLabel diceHolder2= new JLabel();
 	
-	private JPanel turnControl;
 	private JLabel turnText;
+	private JLabel characterText;
+	private JLabel instructionsText;
+	
+	private JButton cardsButton = new JButton("Cards");
+	private JButton checklistButton = new JButton("Checklist");
 	
 	private JMenu jMenu1;
 	private JMenu jMenu2;
@@ -165,7 +169,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 
 		frame.setJMenuBar(jMenuBar1);
 
-		frame.setPreferredSize(new Dimension(516,650));
+		frame.setPreferredSize(new Dimension(516,670));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		controls = new JPanel();
@@ -196,6 +200,8 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 1;
+		c.gridheight = 3;
+		c.ipady = 10;
 		diceControl.add(diceHolder1, c);
 
 		c.gridx = 1;
@@ -204,10 +210,37 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 		c.insets = new Insets(0,10,0,0);
 		diceControl.add(diceHolder2, c);
 		
+		
+		c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(0, 10, 0, 0);
 		c.gridx = 2;
 		c.gridy = 0;
-		turnText = new JLabel("It's blahs turn");
+		turnText = new JLabel("It's Player 1's turn.");
 		diceControl.add(turnText, c);
+		
+		c.gridx = 2;
+		c.gridy = 1;
+		c.gridheight = 2;
+		characterText = new JLabel("Go, Kasandra Scarlet!");
+		characterText.setFont(characterText.getFont().deriveFont(26.0f));
+		diceControl.add(characterText, c);
+		
+		c.gridx = 2;
+		c.gridy = 3;
+		c.gridheight = 1;
+		instructionsText = new JLabel("Click anywhere in the green area to move there");
+		diceControl.add(instructionsText, c);
+		
+		c.gridx = 3;
+		c.gridy = 0;
+		c.gridheight = 2;
+		c.ipady = 26;
+		diceControl.add(cardsButton, c);
+		
+		c.gridy = 2;
+		diceControl.add(checklistButton, c);
+		
 		controls.add(diceControl, BorderLayout.WEST);
 		
 		frame.add(controls);
@@ -301,8 +334,8 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 
 	@Override
 	public void SetTurn(int playerIndex, Player p, Board b) {
-		// TODO Auto-generated method stub
-
+		turnText.setText(String.format("It's Player %d's turn.", playerIndex));
+		characterText.setText(String.format("Go, %s!", p.GetCharacter().GetName()));
 	}
 
 
@@ -317,8 +350,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener {
 	public void SetRoll(int d1, int d2) {
 		//System.out.printf("Setting dice to %d %d\n", d1, d2);
 		setDice(d1, d2);
-
-
+		rollDice.setText(String.format("You rolled: %d!", d1+d2));
 	}
 
 

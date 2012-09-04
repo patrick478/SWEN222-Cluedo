@@ -131,7 +131,7 @@ public class Player {
 			tested[(curFrame.curPosY * Board.Width) + curFrame.curPosX] = true;
 			
 			System.out.printf("Examining %d, %d. numSteps=%d. curRoll=%d\n", curFrame.curPosX, curFrame.curPosY, curFrame.numSteps, roll);
-			if(curFrame.numSteps >= roll) continue;
+			if(curFrame.numSteps > roll) continue;
 			else
 			{
 				PathfindFrame leftFrame = new PathfindFrame(curFrame.steps, curFrame.curPosX-1, curFrame.curPosY);
