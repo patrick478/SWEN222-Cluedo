@@ -3,19 +3,15 @@ package cluedo;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
+@SuppressWarnings("serial")
 public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListener {
 
 	public static double xOffset = 12;
@@ -147,12 +143,6 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 		diceHolder1.repaint();
 		diceHolder2.repaint();
 	}
-	
-	private void showNotebook()
-	{
-		
-	}
-
 
 	public void setupFrame(){
 		frame = new JFrame();
@@ -182,7 +172,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 			public void actionPerformed(ActionEvent event) {
 				showCards(currentPlayer);
 				System.out.println("Showing cards");
-			}
+				}
 		});
 		gameShowNotebook = new JMenuItem("Show Notebook");
 
@@ -208,7 +198,18 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 		frame.setPreferredSize(new Dimension(516,670));
 		frame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(this);
+		cardsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				showCards(currentPlayer);
+				}
 
+		});
+		checklistButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				showNotebook(currentPlayer);
+				}
+
+		});
 		controls = new JPanel();
 
 		controls.setLayout(new BorderLayout());
@@ -377,14 +378,13 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 
 	@Override
 	public void SetPosition(BoardTile bt) {
-		// TODO Auto-generated method stub
+		// this isn't need
 
 	}
 
 
 	@Override
 	public void SetRoll(int d1, int d2) {
-		//System.out.printf("Setting dice to %d %d\n", d1, d2);
 		setDice(d1, d2);
 		rollDice.setText(String.format("You rolled: %d!", d1+d2));
 	}
@@ -407,7 +407,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 
 	@Override
 	public Guess GetAccusation(Player p) {
-		// TODO Auto-generated method stub
+		// TODO: Do this
 		return null;
 	}
 
@@ -426,8 +426,6 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 
 	@Override
 	public void NotifyMoved(int nSteps, Room r) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -447,26 +445,18 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -500,7 +490,7 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 
 
 	public void showCards(Player p){
-		final JFrame cardFrame = new JFrame();
+		final JFrame cardFrame = new JFrame("Cards being held by player:" + p.GetCharacter());
 		cardFrame.setLayout(new GridLayout(0,1));
 		ArrayList<GameObject> cards =  p.getCards();
 		for(GameObject go: cards){
@@ -514,10 +504,30 @@ public class GUI extends JFrame implements CluedoUI, MouseListener, WindowListen
 		});
 		
 		cardFrame.add(close);
+		cardFrame.pack();
+		cardFrame.setLocationRelativeTo(frame);
+		cardFrame.setVisible(true);
 	}
 	
-	public void showNotebook(Player p)
-	{
+	public void showNotebook(Player p){
+
+		final JFrame checklistFrame = new JFrame("Cards being held by player:" + p.GetCharacter());
+		checklistFrame.setLayout(new GridLayout(0,1));
+		ArrayList<GameObject> cards =  p.getChecklist();
+		for(GameObject go: cards){
+			checklistFrame.add(new JLabel(go.GetName()));
+		}
+		JButton close = new JButton("Close");
+		close.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event) {
+				checklistFrame.dispose();
+			}
+		});
+		
+		checklistFrame.add(close);
+		checklistFrame.pack();
+		checklistFrame.setLocationRelativeTo(frame);
+		checklistFrame.setVisible(true);
 	}
 
 }

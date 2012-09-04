@@ -22,6 +22,9 @@ public class Player {
 	public ArrayList<GameObject> getCards() {
 		return cards;
 	}
+	public ArrayList<GameObject> getChecklist() {
+		return checklist;
+	}
 
 	public void SetPosition(int x, int y)
 	{
@@ -135,8 +138,8 @@ public class Player {
 			if(tested[(curFrame.curPosY * Board.Width) + curFrame.curPosX]) continue;
 			tested[(curFrame.curPosY * Board.Width) + curFrame.curPosX] = true;
 			
-			if(b.boardSpaces[curFrame.curPosX][curFrame.curPosY] instanceof Room)
-				continue;
+			//if(b.boardSpaces[curFrame.curPosX][curFrame.curPosY] instanceof Room)
+			//	continue;
 			//	curFrame.numSteps--;
 			
 			System.out.printf("Examining %d, %d. numSteps=%d. curRoll=%d\n", curFrame.curPosX, curFrame.curPosY, curFrame.numSteps, roll);
@@ -197,8 +200,8 @@ public class Player {
 	
 	public Movement[] PlotMovements(Board board)
 	{
-		Boolean[] tested = new Boolean[board.Width * board.Height];
-		for(int i = 0; i < board.Width * board.Height; i++)
+		Boolean[] tested = new Boolean[Board.Width * Board.Height];
+		for(int i = 0; i < Board.Width * Board.Height; i++)
 			tested[i] = false;
 		
 		Queue<PathfindFrame> toTest = new LinkedList<PathfindFrame>();
@@ -210,7 +213,7 @@ public class Player {
 		{
 			curFrame = toTest.remove();
 						
-			int self = (curFrame.curPosY * board.Width) + curFrame.curPosX;
+			int self = (curFrame.curPosY * Board.Width) + curFrame.curPosX;
 			if(tested[self])
 				continue;
 			else
@@ -234,12 +237,12 @@ public class Player {
 			
 			curFrame.steps.add(new Pair(curFrame.curPosX, curFrame.curPosY));
 			
-			int left = (curFrame.curPosY * board.Width) + curFrame.curPosX-1;
-			int right = (curFrame.curPosY * board.Width) + curFrame.curPosX+1;
-			int up = ((curFrame.curPosY-1) * board.Width) + curFrame.curPosX;
-			int down = ((curFrame.curPosY+1) * board.Width) + curFrame.curPosX;
+			int left = (curFrame.curPosY * Board.Width) + curFrame.curPosX-1;
+			int right = (curFrame.curPosY * Board.Width) + curFrame.curPosX+1;
+			int up = ((curFrame.curPosY-1) * Board.Width) + curFrame.curPosX;
+			int down = ((curFrame.curPosY+1) * Board.Width) + curFrame.curPosX;
 			
-			if(curFrame.curPosX < board.Width-1 && !tested[right])
+			if(curFrame.curPosX < Board.Width-1 && !tested[right])
 			{
 				toTest.add(new PathfindFrame(curFrame.steps, curFrame.curPosX+1, curFrame.curPosY));
 				//System.out.printf("Moved right\n");
@@ -249,7 +252,7 @@ public class Player {
 				toTest.add(new PathfindFrame(curFrame.steps, curFrame.curPosX-1, curFrame.curPosY));
 				//System.out.printf("Moved left\n");
 			}
-			if(curFrame.curPosY < board.Height-1 && !tested[down])
+			if(curFrame.curPosY < Board.Height-1 && !tested[down])
 			{
 				toTest.add(new PathfindFrame(curFrame.steps, curFrame.curPosX, curFrame.curPosY+1));
 				//System.out.printf("Moved down\n");

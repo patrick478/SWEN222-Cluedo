@@ -233,7 +233,6 @@ public class TextCluedoUI implements CluedoUI {
 		return gn;
 	}
 
-	@Override
 	public Movement PresentMovements(Player p, Movement[] m, int totalDice) {
 		int choice = -1;
 
@@ -269,5 +268,12 @@ public class TextCluedoUI implements CluedoUI {
 
 	@Override
 	public void Repaint() {
+	}
+
+	@Override
+	public void PresentMovements(Player p, Movement[] m, int[][] moveables,
+			int diceTotal) {
+		// TODO Auto-generated method stub
+		
 	}
 }
